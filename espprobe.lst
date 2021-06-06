@@ -184,22 +184,22 @@
 028+  8100                     ; ld      (0x5c8d),a
 029+  8100                     ; xor     a
 030+  8100                     ; out     (0xfe),a
-031+  8100 CD 1B 8C            call    clear_screen
-032+  8103 CD 34 8C            call    reset_isa
+031+  8100 CD 40 8C            call    clear_screen
+032+  8103 CD 59 8C            call    reset_isa
 033+  8106 CD 2A 85            call    check_ports
 034+  8109 20 09               jr      nz,p100
-035+  810B 21 C2 8C            ld      hl,msg_no_comport
+035+  810B 21 E7 8C            ld      hl,msg_no_comport
 036+  810E CD 4E 85            call    zx_puts_safe
 037+  8111 C3 16 84            jp      exit
 038+  8114                     ; ld      hl,udg
 039+  8114                     ; ld      (0x5c7b),hl
 040+  8114             
 041+  8114 3E 45       p100:    ld      a,0x45
-042+  8116 32 8F 5C            ld      (0x5c8f),a
+042+  8116 32 90 85            ld      (color),a
 043+  8119 21 14 81            ld      hl,p100
 044+  811C E5                  push    hl
 045+  811D             
-046+  811D 21 DB 8C            ld      hl,msg_baudmenu
+046+  811D 21 00 8D            ld      hl,msg_baudmenu
 047+  8120 CD 4E 85            call    zx_puts_safe
 048+  8123 CD 5D 85    p102:    call    zx_getkey
 049+  8126 11 01 00            ld      de,1
@@ -229,7 +229,7 @@
 073+  8152 06 03               ld      b,3
 074+  8154 C5          p103:    push    bc
 075+  8155 11 19 00            ld      de,25
-076+  8158 21 C3 8E            ld      hl,cmd_ate0
+076+  8158 21 E8 8E            ld      hl,cmd_ate0
 077+  815B CD 1C 84            call    send_cmd_wait_ok
 078+  815E C1                  pop     bc
 079+  815F 28 05               jr      z,p104
@@ -237,21 +237,21 @@
 081+  8163 C3 06 84            jp      x_err
 082+  8166             p104: 
 083+  8166             ;
-084+  8166 21 34 8D            ld      hl,msg_req_vers
+084+  8166 21 59 8D            ld      hl,msg_req_vers
 085+  8169 CD 4E 85            call    zx_puts_safe
 086+  816C 11 19 00            ld      de,25
-087+  816F 21 CA 8E            ld      hl,cmd_gmr
+087+  816F 21 EF 8E            ld      hl,cmd_gmr
 088+  8172 CD 1C 84            call    send_cmd_wait_ok
 089+  8175 C2 06 84            jp      nz,x_err
 090+  8178             ;
-091+  8178 21 4A 8D            ld      hl,msg_press_key
+091+  8178 21 6F 8D            ld      hl,msg_press_key
 092+  817B CD 4E 85            call    zx_puts_safe
 093+  817E CD 5D 85            call    zx_getkey
 094+  8181             ;
-095+  8181 21 58 8D            ld      hl,msg_chg_baud
+095+  8181 21 7D 8D            ld      hl,msg_chg_baud
 096+  8184 CD 4E 85            call    zx_puts_safe
 097+  8187 11 19 00            ld      de,25
-098+  818A 21 D3 8E            ld      hl,cmd_uart_9600
+098+  818A 21 F8 8E            ld      hl,cmd_uart_9600
 099+  818D CD 1C 84            call    send_cmd_wait_ok
 100+  8190 C2 06 84            jp      nz,x_err
 101+  8193 11 0C 00            ld      de,12
@@ -259,26 +259,26 @@
 103+  8199 76                  halt
 104+  819A             ;
 105+  819A 11 19 00            ld      de,25
-106+  819D 21 EE 8E            ld      hl,cmd_cwmode
+106+  819D 21 13 8F            ld      hl,cmd_cwmode
 107+  81A0 CD 1C 84            call    send_cmd_wait_ok
 108+  81A3 C2 06 84            jp      nz,x_err
 109+  81A6 11 19 00            ld      de,25
-110+  81A9 21 00 8F            ld      hl,cmd_cwautoconn
+110+  81A9 21 25 8F            ld      hl,cmd_cwautoconn
 111+  81AC CD 1C 84            call    send_cmd_wait_ok
 112+  81AF C2 06 84            jp      nz,x_err
 113+  81B2 11 19 00            ld      de,25
-114+  81B5 21 12 8F            ld      hl,cmd_cwqap
+114+  81B5 21 37 8F            ld      hl,cmd_cwqap
 115+  81B8 CD 1C 84            call    send_cmd_wait_ok
 116+  81BB C2 06 84            jp      nz,x_err
 117+  81BE             ;
-118+  81BE 21 6D 8D    p110:    ld      hl,msg_ap_list
+118+  81BE 21 92 8D    p110:    ld      hl,msg_ap_list
 119+  81C1 CD 4E 85            call    zx_puts_safe
 120+  81C4 11 FA 00            ld      de,250
-121+  81C7 21 1D 8F            ld      hl,cmd_cwlap
+121+  81C7 21 42 8F            ld      hl,cmd_cwlap
 122+  81CA CD 1C 84            call    send_cmd_wait_ok
 123+  81CD C2 06 84            jp      nz,x_err
 124+  81D0             
-125+  81D0 21 83 8D            ld      hl,msg_repeat
+125+  81D0 21 A8 8D            ld      hl,msg_repeat
 126+  81D3 CD 4E 85            call    zx_puts_safe
 127+  81D6 CD 5D 85            call    zx_getkey
 128+  81D9 FE 52               cp      'R'
@@ -286,47 +286,47 @@
 130+  81DD FE 72               cp      'r'
 131+  81DF 28 DD               jr      z,p110
 132+  81E1             ;
-133+  81E1 21 9F 8D            ld      hl,msg_ap_conn
+133+  81E1 21 C4 8D            ld      hl,msg_ap_conn
 134+  81E4 CD 4E 85            call    zx_puts_safe
 135+  81E7 11 E8 03            ld      de,1000
-136+  81EA 21 28 8F            ld      hl,cmd_cwjap
+136+  81EA 21 4D 8F            ld      hl,cmd_cwjap
 137+  81ED CD 1C 84            call    send_cmd_wait_ok
 138+  81F0 CA F8 81            jp      z,p120
 139+  81F3 CD 06 84            call    x_err
 140+  81F6 18 C6               jr      p110
 141+  81F8             ;
-142+  81F8 21 BB 8D    p120:    ld      hl,msg_ipcfg
+142+  81F8 21 E0 8D    p120:    ld      hl,msg_ipcfg
 143+  81FB CD 4E 85            call    zx_puts_safe
 144+  81FE 11 19 00            ld      de,25
-145+  8201 21 6A 8F            ld      hl,cmd_cipsta
+145+  8201 21 8F 8F            ld      hl,cmd_cipsta
 146+  8204 CD 1C 84            call    send_cmd_wait_ok
 147+  8207 C4 06 84            call    nz,x_err
 148+  820A             ;
-149+  820A 21 CF 8D            ld      hl,msg_ping
+149+  820A 21 F4 8D            ld      hl,msg_ping
 150+  820D CD 4E 85            call    zx_puts_safe
 151+  8210 11 4B 00            ld      de,75
-152+  8213 21 77 8F            ld      hl,cmd_ping_g
+152+  8213 21 9C 8F            ld      hl,cmd_ping_g
 153+  8216 CD 1C 84            call    send_cmd_wait_ok
 154+  8219 C4 06 84            call    nz,x_err
 155+  821C 11 4B 00            ld      de,75
-156+  821F 21 8E 8F            ld      hl,cmd_ping_y
+156+  821F 21 B3 8F            ld      hl,cmd_ping_y
 157+  8222 CD 1C 84            call    send_cmd_wait_ok
 158+  8225 C4 06 84            call    nz,x_err
 159+  8228             ;
-160+  8228 21 4A 8D    p199:    ld      hl,msg_press_key
+160+  8228 21 6F 8D    p199:    ld      hl,msg_press_key
 161+  822B CD 4E 85            call    zx_puts_safe
 162+  822E CD 5D 85            call    zx_getkey
 163+  8231             ;
 164+  8231 21 00 40    p200:    ld      hl,bigbuff
-165+  8234 22 67 85            ld      (ptr),hl
+165+  8234 22 8B 85            ld      (ptr),hl
 166+  8237 11 01 40            ld      de,bigbuff+1
 167+  823A 01 00 40            ld      bc,16384
 168+  823D 36 00               ld      (hl),0
 169+  823F ED B0               ldir
-170+  8241 CD 1B 8C            call    clear_screen
+170+  8241 CD 40 8C            call    clear_screen
 171+  8244 3E 45               ld      a,0x45
-172+  8246 32 8F 5C            ld      (0x5c8f),a
-173+  8249 21 D9 8D            ld      hl,msg_menuload
+172+  8246 32 90 85            ld      (color),a
+173+  8249 21 FE 8D            ld      hl,msg_menuload
 174+  824C CD 4E 85            call    zx_puts_safe
 175+  824F CD 5D 85    p201:    call    zx_getkey
 176+  8252 FE 31               cp      0x31
@@ -334,13 +334,13 @@
 178+  8256 FE 3A               cp      0x3a
 179+  8258 30 F5               jr      nc,p201
 180+  825A D6 31               sub     0x31
-181+  825C 32 6B 85            ld      (resnum),a
+181+  825C 32 8F 85            ld      (resnum),a
 182+  825F             
 183+  825F CD B1 84            call    rs232_reset_fifo
-184+  8262 21 92 8E            ld      hl,msg_open_tcp
+184+  8262 21 B7 8E            ld      hl,msg_open_tcp
 185+  8265 CD 4E 85            call    zx_puts_safe
 186+  8268 11 FA 00            ld      de,250
-187+  826B 21 A4 8F            ld      hl,cmd_conn2site
+187+  826B 21 C9 8F            ld      hl,cmd_conn2site
 188+  826E CD 1C 84            call    send_cmd_wait_ok
 189+  8271 CA 79 82            jp      z,p210
 190+  8274 CD 06 84            call    x_err
@@ -349,22 +349,22 @@
 193+  8279 11 32 00            ld      de,50
 194+  827C CD 62 85            call    set_timeout50
 195+  827F 3E 06               ld      a,0x06
-196+  8281 32 8F 5C            ld      (0x5c8f),a
-197+  8284 21 C6 8F            ld      hl,cmd_cipsend
+196+  8281 32 90 85            ld      (color),a
+197+  8284 21 EB 8F            ld      hl,cmd_cipsend
 198+  8287 CD 0B 85            call    rs232_putstr
-199+  828A 3A 6B 85            ld      a,(resnum)
+199+  828A 3A 8F 85            ld      a,(resnum)
 200+  828D 6F                  ld      l,a
 201+  828E 26 00               ld      h,0
 202+  8290 29                  add     hl,hl
 203+  8291 29                  add     hl,hl
-204+  8292 11 76 8C            ld      de,tabl_ptrurl
+204+  8292 11 9B 8C            ld      de,tabl_ptrurl
 205+  8295 19                  add     hl,de
 206+  8296 5E                  ld      e,(hl)
 207+  8297 23                  inc     hl
 208+  8298 56                  ld      d,(hl)
 209+  8299 EB                  ex      de,hl
 210+  829A CD 0B 85            call    rs232_putstr
-211+  829D 21 C7 8E            ld      hl,str_crlf
+211+  829D 21 EC 8E            ld      hl,str_crlf
 212+  82A0 CD 0B 85            call    rs232_putstr
 213+  82A3             
 214+  82A3 CD 31 84            call    wait_ok
@@ -372,7 +372,7 @@
 216+  82A9 CD 06 84            call    x_err
 217+  82AC C3 28 82            jp      p199
 218+  82AF 3E 07       p211:    ld      a,0x07
-219+  82B1 32 8F 5C            ld      (0x5c8f),a
+219+  82B1 32 90 85            ld      (color),a
 220+  82B4 CD 14 85    p212:    call    rs232_getchar
 221+  82B7 28 FB               jr      z,p212
 222+  82B9 F5                  push    af
@@ -382,23 +382,23 @@
 226+  82C0 20 ED               jr      nz,p211
 227+  82C2             
 228+  82C2 3E 06               ld      a,0x06
-229+  82C4 32 8F 5C            ld      (0x5c8f),a
-230+  82C7 21 D2 8F            ld      hl,str_get1
+229+  82C4 32 90 85            ld      (color),a
+230+  82C7 21 F7 8F            ld      hl,str_get1
 231+  82CA CD 0B 85            call    rs232_putstr
-232+  82CD 3A 6B 85            ld      a,(resnum)
+232+  82CD 3A 8F 85            ld      a,(resnum)
 233+  82D0 6F                  ld      l,a
 234+  82D1 26 00               ld      h,0
 235+  82D3 29                  add     hl,hl
 236+  82D4 23                  inc     hl
 237+  82D5 29                  add     hl,hl
-238+  82D6 11 76 8C            ld      de,tabl_ptrurl
+238+  82D6 11 9B 8C            ld      de,tabl_ptrurl
 239+  82D9 19                  add     hl,de
 240+  82DA 5E                  ld      e,(hl)
 241+  82DB 23                  inc     hl
 242+  82DC 56                  ld      d,(hl)
 243+  82DD EB                  ex      de,hl
 244+  82DE CD 0B 85            call    rs232_putstr
-245+  82E1 21 D7 8F            ld      hl,str_get2
+245+  82E1 21 FC 8F            ld      hl,str_get2
 246+  82E4 CD 0B 85            call    rs232_putstr
 247+  82E7             
 248+  82E7 CD 31 84            call    wait_ok
@@ -411,27 +411,27 @@
 255+  82F8 CD 62 85            call    set_timeout50
 256+  82FB             
 257+  82FB 3E 07       p22a:    ld      a,0x07
-258+  82FD 32 8F 5C            ld      (0x5c8f),a
-259+  8300 21 CC 93            ld      hl,strbuff
+258+  82FD 32 90 85            ld      (color),a
+259+  8300 21 F1 93            ld      hl,strbuff
 260+  8303 36 00               ld      (hl),0
 261+  8305 CD 8E 84            call    rdipd
-262+  8308 3A CC 93            ld      a,(strbuff)
+262+  8308 3A F1 93            ld      a,(strbuff)
 263+  830B B7                  or      a
 264+  830C 20 06               jr      nz,p221
 265+  830E CD 0D 84            call    x_tout
 266+  8311 C3 28 82            jp      p199
-267+  8314 11 C4 93    p221:    ld      de,str_ipd
+267+  8314 11 E9 93    p221:    ld      de,str_ipd
 268+  8317 CD A5 84            call    ss_cmp
 269+  831A 28 06               jr      z,p222
 270+  831C CD 06 84            call    x_err
 271+  831F C3 28 82            jp      p199
 272+  8322             p222: 
 273+  8322 3E 45               ld      a,0x45
-274+  8324 32 8F 5C            ld      (0x5c8f),a
-275+  8327 21 BF 8E            ld      hl,msg_skip
+274+  8324 32 90 85            ld      (color),a
+275+  8327 21 E4 8E            ld      hl,msg_skip
 276+  832A CD 4E 85            call    zx_puts_safe
 277+  832D 21 00 00            ld      hl,0
-278+  8330 11 D3 93            ld      de,strbuff+7
+278+  8330 11 F8 93            ld      de,strbuff+7
 279+  8333 1A          p223:    ld      a,(de)
 280+  8334 13                  inc     de
 281+  8335 FE 3A               cp      ':'
@@ -448,12 +448,12 @@
 292+  8344 09                  add     hl,bc
 293+  8345 18 EC               jr      p223
 294+  8347             
-295+  8347 22 69 85    p230:    ld      (packsz),hl
+295+  8347 22 8D 85    p230:    ld      (packsz),hl
 296+  834A EB                  ex      de,hl
-297+  834B 2A 67 85            ld      hl,(ptr)
+297+  834B 2A 8B 85            ld      hl,(ptr)
 298+  834E CD 14 85    p231:    call    rs232_getchar
 299+  8351 20 0B               jr      nz,p232
-300+  8353 CD 63 85            call    check_timeout
+300+  8353 CD 6E 85            call    check_timeout
 301+  8356 38 F6               jr      c,p231
 302+  8358 CD 0D 84            call    x_tout
 303+  835B C3 28 82            jp      p199
@@ -463,9 +463,9 @@
 307+  8361 7A                  ld      a,d
 308+  8362 B3                  or      e
 309+  8363 20 E9               jr      nz,p231
-310+  8365 22 67 85            ld      (ptr),hl
+310+  8365 22 8B 85            ld      (ptr),hl
 311+  8368             
-312+  8368 2A 69 85            ld      hl,(packsz)
+312+  8368 2A 8D 85            ld      hl,(packsz)
 313+  836B 11 50 05            ld      de,1360
 314+  836E AF                  xor     a
 315+  836F ED 52               sbc     hl,de
@@ -482,7 +482,7 @@
 326+  8380 20 F6               jr      nz,p242
 327+  8382 23                  inc     hl
 328+  8383             
-329+  8383 3A 6B 85            ld      a,(resnum)
+329+  8383 3A 8F 85            ld      a,(resnum)
 330+  8386 FE 03               cp      3
 331+  8388 DA F8 83            jp      c,pscr0
 332+  838B FE 06               cp      6
@@ -490,7 +490,7 @@
 334+  8390             ;pmus0:
 335+  8390 E5                  push    hl
 336+  8391 EB                  ex      de,hl
-337+  8392 2A 67 85            ld      hl,(ptr)
+337+  8392 2A 8B 85            ld      hl,(ptr)
 338+  8395 AF                  xor     a
 339+  8396 ED 52               sbc     hl,de
 340+  8398 4D                  ld      c,l
@@ -498,13 +498,13 @@
 342+  839A E1                  pop     hl
 343+  839B 11 6E C8            ld      de,0xc86e
 344+  839E ED B0               ldir
-345+  83A0 21 74 85            ld      hl,vtpl
+345+  83A0 21 99 85            ld      hl,vtpl
 346+  83A3 11 00 C0            ld      de,0xc000
 347+  83A6 01 51 06            ld      bc,sz_vtpl
 348+  83A9 ED B0               ldir
 349+  83AB 3E 45               ld      a,0x45
-350+  83AD 32 8F 5C            ld      (0x5c8f),a
-351+  83B0 21 AB 8E            ld      hl,msg_musply
+350+  83AD 32 90 85            ld      (color),a
+351+  83B0 21 D0 8E            ld      hl,msg_musply
 352+  83B3 CD 4E 85            call    zx_puts_safe
 353+  83B6 CD 00 C0            call    0xc000
 354+  83B9 FB                  ei
@@ -540,10 +540,10 @@
 384+  8400 CD 5D 85            call    zx_getkey
 385+  8403 C3 31 82            jp      p200
 386+  8406             ;------------------------------
-387+  8406 21 AF 8C    x_err:   ld      hl,msgff_error
+387+  8406 21 D4 8C    x_err:   ld      hl,msgff_error
 388+  8409 FE 01               cp      1
 389+  840B 20 03               jr      nz,x_er1
-390+  840D 21 9A 8C    x_tout:  ld      hl,msgff_timeout
+390+  840D 21 BF 8C    x_tout:  ld      hl,msgff_timeout
 391+  8410 CD 51 85    x_er1:   call    zx_puts_ff
 392+  8413 C3 16 84            jp      exit
 393+  8416 0E 41       exit    ld      c,Dss.Exit              ;exit!
@@ -556,37 +556,37 @@
 400+  841D CD 62 85            call    set_timeout50
 401+  8420 CD B1 84            call    rs232_reset_fifo
 402+  8423 3E 06               ld      a,0x06
-403+  8425 32 8F 5C            ld      (0x5c8f),a
+403+  8425 32 90 85            ld      (color),a
 404+  8428 E1                  pop     hl
 405+  8429 CD 0B 85            call    rs232_putstr
 406+  842C 3E 45               ld      a,0x45
-407+  842E 32 8F 5C            ld      (0x5c8f),a
-408+  8431 21 CC 93    wait_ok: ld      hl,strbuff
+407+  842E 32 90 85            ld      (color),a
+408+  8431 21 F1 93    wait_ok: ld      hl,strbuff
 409+  8434 CD 79 84            call    rdstr
-410+  8437 3A CC 93            ld      a,(strbuff)
+410+  8437 3A F1 93            ld      a,(strbuff)
 411+  843A B7                  or      a
 412+  843B 20 02               jr      nz,_scwo1
 413+  843D 3C                  inc     a
 414+  843E C9                  ret
 415+  843F 3E 07       _scwo1:  ld      a,0x07
-416+  8441 32 8F 5C            ld      (0x5c8f),a
-417+  8444 21 CC 93            ld      hl,strbuff
+416+  8441 32 90 85            ld      (color),a
+417+  8444 21 F1 93            ld      hl,strbuff
 418+  8447 CD 4E 85            call    zx_puts_safe
 419+  844A 3E 45               ld      a,0x45
-420+  844C 32 8F 5C            ld      (0x5c8f),a
-421+  844F 11 AA 93            ld      de,str_ok
+420+  844C 32 90 85            ld      (color),a
+421+  844F 11 CF 93            ld      de,str_ok
 422+  8452 CD A5 84            call    ss_cmp
 423+  8455 3E 00               ld      a,0x00
 424+  8457 28 1E               jr      z,_scwo9
-425+  8459 11 B5 93            ld      de,str_fail
+425+  8459 11 DA 93            ld      de,str_fail
 426+  845C CD A5 84            call    ss_cmp
 427+  845F 3E FF               ld      a,0xff
 428+  8461 28 14               jr      z,_scwo9
-429+  8463 11 AE 93            ld      de,str_error
+429+  8463 11 D3 93            ld      de,str_error
 430+  8466 CD A5 84            call    ss_cmp
 431+  8469 3E FE               ld      a,0xfe
 432+  846B 28 0A               jr      z,_scwo9
-433+  846D 11 BB 93            ld      de,str_send_ok
+433+  846D 11 E0 93            ld      de,str_send_ok
 434+  8470 CD A5 84            call    ss_cmp
 435+  8473 3E FD               ld      a,0xfd
 436+  8475 20 BA               jr      nz,wait_ok
@@ -600,7 +600,7 @@
 444+  8482 77                  ld      (hl),a
 445+  8483 23                  inc     hl
 446+  8484 18 F3               jr      rdstr
-447+  8486 CD 63 85    rdst2:   call    check_timeout
+447+  8486 CD 6E 85    rdst2:   call    check_timeout
 448+  8489 38 EE               jr      c,rdstr
 449+  848B 36 00       rdst3:   ld      (hl),0
 450+  848D C9                  ret
@@ -615,11 +615,11 @@
 459+  849A FE 3A               cp      ':'
 460+  849C C8                  ret     z
 461+  849D 18 EF               jr      rdipd
-462+  849F CD 63 85    ripd2:   call    check_timeout
+462+  849F CD 6E 85    ripd2:   call    check_timeout
 463+  84A2 38 EA               jr      c,rdipd
 464+  84A4 C9                  ret
 465+  84A5             ;------------------------------
-466+  84A5 21 CC 93    ss_cmp:  ld      hl,strbuff
+466+  84A5 21 F1 93    ss_cmp:  ld      hl,strbuff
 467+  84A8 1A          ss_cm1:  ld      a,(de)
 468+  84A9 B7                  or      a
 469+  84AA C8                  ret     z
@@ -630,12 +630,12 @@
 474+  84B1             ;------------------------------
 475+  84B1             rs232_reset_fifo: 
 476+  84B1 F3                  di
-477+  84B2 CD 48 8C            call    open_isa_ports
+477+  84B2 CD 6D 8C            call    open_isa_ports
 478+  84B5 18 1A               jr      rs232_init.reset_fifo
 479+  84B7             ;------------------------------
 480+  84B7             rs232_init: 
 481+  84B7 F3                  di
-482+  84B8 CD 48 8C            call    open_isa_ports
+482+  84B8 CD 6D 8C            call    open_isa_ports
 483+  84BB 21 FB C2            ld      hl,LCR          ;LCR
 484+  84BE 3E 83               ld      a,0x83
 485+  84C0 77                  ld      (hl),a
@@ -662,7 +662,7 @@
 506+  84E2 21 F8 C2            ld      hl,DAT          ;DAT
 507+  84E5 7E                  ld      a,(hl)
 508+  84E6 18 F2               jr      _clfifo
-509+  84E8 CD 64 8C    .exit:   call    close_isa_ports
+509+  84E8 CD 89 8C    .exit:   call    close_isa_ports
 510+  84EB FB                  ei
 511+  84EC C9                  ret
 512+  84ED             ;------------------------------
@@ -671,7 +671,7 @@
 515+  84EE E5                  push    hl
 516+  84EF F5                  push    AF
 517+  84F0 F5                  push    af        
-518+  84F1 CD 48 8C            call    open_isa_ports
+518+  84F1 CD 6D 8C            call    open_isa_ports
 519+  84F4 F1                  pop     af
 520+  84F5 CD 36 85            call    zx_putchar_safe
 521+  84F8 D1                  pop     de
@@ -682,7 +682,7 @@
 526+  84FF 28 FB               jr      z,_putch1
 527+  8501 21 F8 C2            ld      hl,DAT          ;DAT
 528+  8504 72                  ld      (hl),d
-529+  8505 CD 64 8C            call    close_isa_ports
+529+  8505 CD 89 8C            call    close_isa_ports
 530+  8508 E1                  pop     hl
 531+  8509 FB                  ei
 532+  850A C9                  ret
@@ -697,7 +697,7 @@
 541+  8514             ;------------------------------
 542+  8514             rs232_getchar: 
 543+  8514 F3                  di
-544+  8515 CD 48 8C            call    open_isa_ports
+544+  8515 CD 6D 8C            call    open_isa_ports
 545+  8518 21 FD C2            ld      hl,LSR       ;LSR
 546+  851B 7E                  ld      a,(hl)
 547+  851C E6 01               and     0x01
@@ -705,12 +705,12 @@
 549+  8520 21 F8 C2            ld      hl,DAT          ;DAT
 550+  8523 7E                  ld      a,(hl)
 551+  8524 04                  inc     b
-552+  8525 CD 64 8C    .exit:   call    close_isa_ports
+552+  8525 CD 89 8C    .exit:   call    close_isa_ports
 553+  8528 FB                  ei
 554+  8529 C9                  ret
 555+  852A             check_ports: 
 556+  852A F3                  di
-557+  852B CD 48 8C            call    open_isa_ports
+557+  852B CD 6D 8C            call    open_isa_ports
 558+  852E 21 FD C2            ld      hl,LSR
 559+  8531 7E                  ld      a,(hl)
 560+  8532 FE FF               cp      0xff
@@ -725,14 +725,14 @@
 569+  8540 38 04               jr      c,_putc2
 570+  8542 FE 80               cp      0x80
 571+  8544 38 02               jr      c,_putc1
-572+  8546 3E 90       _putc2:  ld      a,0x90
+572+  8546 3E 3F       _putc2:  ld      a,'?'
 573+  8548 E5          _putc1:  push    hl
-574+  8549 CD 11 8C            call    prn_a
+574+  8549 CD 36 8C            call    prn_a
 575+  854C E1                  pop     hl
 576+  854D C9                  ret
 577+  854E             ;------------------------------
 578+  854E             zx_puts_safe: 
-579+  854E C3 17 8C            jp      prn_tx
+579+  854E C3 3C 8C            jp      prn_tx
 580+  8551             ;         ld      a,0xff
 581+  8551             ;         ld      (0x5c8c),a
 582+  8551             ; _puts1: ld      a,(hl)
@@ -750,7 +750,7 @@
 594+  8553 FE FF               cp      0xff
 595+  8555 C8                  ret     z
 596+  8556 E5                  push    hl
-597+  8557 CD 11 8C            call    prn_a
+597+  8557 CD 36 8C            call    prn_a
 598+  855A E1                  pop     hl
 599+  855B 18 F4               jr      _psff1
 600+  855D             ;------------------------------
@@ -761,621 +761,643 @@
 605+  8561 C9                  ret
 606+  8562             ;------------------------------
 607+  8562             set_timeout50: 
-608+  8562 C9                  ret
-609+  8563                     ; ld      hl,(0x5c78)
-610+  8563                     ; add     hl,de
-611+  8563                     ; ld      (tmout),hl
-612+  8563                     ; ret
-613+  8563             ;------------------------------
-614+  8563             check_timeout: 
-615+  8563             ;todo: improve timeout
-616+  8563 A7                  and     a
-617+  8564 C9                  ret
-618+  8565                     ; push    hl
-619+  8565                     ; push    de
-620+  8565                     ; ld      de,(tmout)
-621+  8565                     ; ld      hl,(0x5c78)
-622+  8565                     ; xor     a
-623+  8565                     ; sbc     hl,de
-624+  8565                     ; pop     de
-625+  8565                     ; pop     hl
-626+  8565                     ; ret
-627+  8565             ;------------------------------
-628+  8565 00 00       tmout:   defw    0
-629+  8567 00 00       ptr:     defw    0
-630+  8569 00 00       packsz:  defw    0
-631+  856B 00          resnum:  defb    0
-632+  856C             ;------------------------------
-633+  856C 00          udg:     defb    %00000000
-634+  856D 54                  defb    %01010100
-635+  856E 2A                  defb    %00101010
-636+  856F 54                  defb    %01010100
-637+  8570 2A                  defb    %00101010
-638+  8571 54                  defb    %01010100
-639+  8572 2A                  defb    %00101010
-640+  8573 00                  defb    %00000000
-641+  8574             ;------------------------------
-642+  8574             vtpl: 
-643+  8574                     ; listing off
-644+  8574                     include "vtplayer.inc"
-001++ 8574                     defb    0x21,0x6E,0xC8,0x18,0x3A,0xC3,0xB9,0xC4,0x18,0x29,0x00,0x00,0x00,0x3D,0x56,0x54
-001++ 8574 216EC8183AC3B9C418290000003D5654
-002++ 8584                     defb    0x49,0x49,0x20,0x50,0x54,0x33,0x20,0x50,0x6C,0x61,0x79,0x65,0x72,0x20,0x72,0x2E
-002++ 8584 49492050543320506C6179657220722E
-003++ 8594                     defb    0x37,0x3D,0x21,0x0A,0xC0,0xCB,0xFE,0xCB,0x46,0xC8,0xE1,0x21,0xA8,0xC6,0x34,0x21
-003++ 8594 373D210AC0CBFECB46C8E121A8C63421
-004++ 85A4                     defb    0x6C,0xC6,0x34,0xAF,0x67,0x6F,0x32,0xB6,0xC6,0x22,0xB7,0xC6,0xC3,0xAB,0xC5,0x22
-004++ 85A4 6CC634AF676F32B6C622B7C6C3ABC522
-005++ 85B4                     defb    0xA8,0xC1,0x22,0x3E,0xC3,0xE5,0x11,0x64,0x00,0x19,0x7E,0x32,0x45,0xC5,0xE5,0xDD
-005++ 85B4 A8C1223EC3E5116400197E3245C5E5DD
-006++ 85C4                     defb    0xE1,0x19,0x22,0x0B,0xC0,0xDD,0x5E,0x02,0x19,0x23,0x22,0xE7,0xC4,0xD1,0xDD,0x6E
-006++ 85C4 E119220BC0DD5E02192322E7C4D1DD6E
-007++ 85D4                     defb    0x03,0xDD,0x66,0x04,0x19,0x22,0xF4,0xC4,0x21,0xA9,0x00,0x19,0x22,0x37,0xC3,0x21
-007++ 85D4 03DD66041922F4C421A900192237C321
-008++ 85E4                     defb    0x69,0x00,0x19,0x22,0xA1,0xC1,0x21,0x0A,0xC0,0xCB,0xBE,0x11,0x1C,0xC6,0x01,0x1F
-008++ 85E4 69001922A1C1210AC0CBBE111CC6011F
-009++ 85F4                     defb    0xC7,0x1A,0x13,0xFE,0x1E,0x30,0x06,0x67,0x1A,0x6F,0x13,0x18,0x07,0xD5,0x16,0x00
-009++ 85F4 C71A13FE1E3006671A6F131807D51600
-010++ 8604                     defb    0x5F,0x19,0x19,0xD1,0x7C,0x02,0x0B,0x7D,0x02,0x0B,0xD6,0xF0,0x20,0xE3,0x21,0x51
-010++ 8604 5F1919D17C020B7D020BD6F020E32151
-011++ 8614                     defb    0xC6,0x77,0x11,0x52,0xC6,0x01,0x6C,0x00,0xED,0xB0,0x3C,0x32,0xA8,0xC6,0x21,0x01
-011++ 8614 C6771152C6016C00EDB03C32A8C62101
-012++ 8624                     defb    0xF0,0x22,0x6C,0xC6,0x22,0x89,0xC6,0x22,0xA6,0xC6,0x21,0x18,0xC6,0x22,0xD1,0xC4
-012++ 8624 F0226CC62289C622A6C62118C622D1C4
-013++ 8634                     defb    0x22,0x5E,0xC6,0x22,0x7B,0xC6,0x22,0x98,0xC6,0x22,0x60,0xC6,0x22,0x7D,0xC6,0x22
-013++ 8634 225EC6227BC62298C62260C6227DC622
-014++ 8644                     defb    0x9A,0xC6,0xDD,0x7E,0xA9,0xD6,0x30,0x38,0x04,0xFE,0x0A,0x38,0x02,0x3E,0x06,0x32
-014++ 8644 9AC6DD7EA9D6303804FE0A38023E0632
-015++ 8654                     defb    0x8D,0xC2,0xF5,0xFE,0x04,0xDD,0x7E,0xFF,0x17,0xE6,0x07,0x21,0xC8,0xC5,0xD5,0x50
-015++ 8654 8DC2F5FE04DD7EFF17E60721C8C5D550
-016++ 8664                     defb    0x87,0x5F,0x19,0x5E,0x23,0xCB,0x3B,0x9F,0xE6,0xA7,0x32,0x20,0xC1,0xEB,0xC1,0x09
-016++ 8664 875F195E23CB3B9FE6A73220C1EBC109
-017++ 8674                     defb    0x1A,0xC6,0xD8,0x4F,0xCE,0xC5,0x91,0x47,0xC5,0x11,0xAE,0xC7,0xD5,0x06,0x0C,0xC5
-017++ 8674 1AC6D84FCEC59147C511AEC7D5060CC5
-018++ 8684                     defb    0x4E,0x23,0xE5,0x46,0xD5,0xEB,0x11,0x17,0x00,0xDD,0x26,0x08,0xCB,0x38,0xCB,0x19
-018++ 8684 4E23E546D5EB111700DD2608CB38CB19
-019++ 8694                     defb    0x19,0x79,0x8A,0x77,0x23,0x78,0x8A,0x77,0x19,0xDD,0x25,0x20,0xEF,0xD1,0x13,0x13
-019++ 8694 19798A7723788A7719DD2520EFD11313
-020++ 86A4                     defb    0xE1,0x23,0xC1,0x10,0xDA,0xE1,0xD1,0x7B,0xFE,0xE4,0x20,0x05,0x3E,0xFD,0x32,0xDC
-020++ 86A4 E123C110DAE1D17BFEE420053EFD32DC
-021++ 86B4                     defb    0xC7,0x1A,0xA7,0x28,0x11,0x1F,0xF5,0x87,0x4F,0x09,0xF1,0x30,0x02,0x35,0x35,0x34
-021++ 86B4 C71AA728111FF5874F09F13002353534
-022++ 86C4                     defb    0xA7,0xED,0x42,0x13,0x18,0xEB,0xF1,0xFE,0x05,0x21,0x11,0x00,0x54,0x5C,0x3E,0x17
-022++ 86C4 A7ED421318EBF1FE05211100545C3E17
-023++ 86D4                     defb    0x30,0x03,0x2D,0x5D,0xAF,0x32,0x74,0xC1,0xDD,0x21,0xBE,0xC6,0x0E,0x10,0xE5,0x19
-023++ 86D4 30032D5DAF3274C1DD21BEC60E10E519
-024++ 86E4                     defb    0xEB,0xED,0x62,0x7D,0x7D,0x7C,0xCE,0x00,0xDD,0x77,0x00,0xDD,0x23,0x19,0x0C,0x79
-024++ 86E4 EBED627D7D7CCE00DD7700DD23190C79
-025++ 86F4                     defb    0xE6,0x0F,0x20,0xEF,0xE1,0x7B,0xFE,0x77,0x20,0x01,0x1C,0x79,0xA7,0x20,0xDF,0xC3
-025++ 86F4 E60F20EFE17BFE7720011C79A720DFC3
-026++ 8704                     defb    0xAB,0xC5,0xDD,0x36,0x08,0x00,0xCD,0x2F,0xC3,0x0A,0x03,0x0F,0x87,0x5F,0x16,0x00
-026++ 8704 ABC5DD360800CD2FC30A030F875F1600
-027++ 8714                     defb    0x21,0x21,0x21,0x19,0x5E,0x23,0x56,0x21,0x21,0x21,0x19,0xDD,0x75,0x03,0xDD,0x74
-027++ 8714 212121195E235621212119DD7503DD74
-028++ 8724                     defb    0x04,0x18,0x41,0x07,0x07,0x07,0x07,0xDD,0x77,0x10,0x18,0x3B,0xDD,0x77,0x08,0xDD
-028++ 8724 04184107070707DD7710183BDD7708DD
-029++ 8734                     defb    0x77,0xF4,0x18,0x33,0x3D,0x20,0x07,0x0A,0x03,0xDD,0x77,0x05,0x18,0x29,0xCD,0x13
-029++ 8734 77F418333D20070A03DD77051829CD13
-030++ 8744                     defb    0xC3,0x18,0x24,0xCD,0x2F,0xC3,0x18,0x1C,0xDD,0x77,0x08,0xDD,0x77,0xF4,0xC4,0x13
-030++ 8744 C31824CD2FC3181CDD7708DD77F4C413
-031++ 8754                     defb    0xC3,0x0A,0x03,0x18,0xB8,0xDD,0x7E,0x06,0x32,0x71,0xC2,0xDD,0x6E,0xFA,0xDD,0x66
-031++ 8754 C30A0318B8DD7E063271C2DD6EFADD66
-032++ 8764                     defb    0xFB,0x22,0x93,0xC2,0x11,0x10,0x20,0x0A,0x03,0x83,0x38,0x96,0x82,0x28,0x49,0x38
-032++ 8764 FB2293C21110200A0383389682284938
-033++ 8774                     defb    0x9B,0x83,0x28,0x25,0x38,0xAD,0x83,0x28,0xB3,0x38,0xB9,0xC6,0x60,0x38,0x20,0x83
-033++ 8774 9B83282538AD8328B338B9C660382083
-034++ 8784                     defb    0x38,0xC1,0x82,0x38,0x0F,0x83,0x38,0xC0,0x87,0x5F,0x21,0x68,0xA2,0x19,0x5E,0x23
-034++ 8784 38C182380F8338C0875F2168A2195E23
-035++ 8794                     defb    0x56,0xD5,0x18,0xD0,0x32,0xAC,0xC6,0x18,0xCE,0xDD,0xCB,0x09,0x86,0x18,0x08,0xDD
-035++ 8794 56D518D032ACC618CEDDCB09861808DD
-036++ 87A4                     defb    0x77,0x06,0xDD,0xCB,0x09,0xC6,0xAF,0xED,0x73,0x46,0xC2,0xDD,0xF9,0x67,0x6F,0xE5
-036++ 87A4 7706DDCB09C6AFED7346C2DDF9676FE5
-037++ 87B4                     defb    0xE5,0xE5,0xE5,0xE5,0xE5,0x31,0x31,0x31,0xDD,0x7E,0x05,0xDD,0x77,0x0F,0xC9,0xDD
-037++ 87B4 E5E5E5E5E5313131DD7E05DD770FC9DD
-038++ 87C4                     defb    0xCB,0x09,0x96,0x0A,0x03,0x03,0x03,0xDD,0x77,0x0A,0xDD,0x77,0xF9,0x11,0xAE,0xC7
-038++ 87C4 CB09960A030303DD770ADD77F911AEC7
-039++ 87D4                     defb    0xDD,0x7E,0x06,0xDD,0x77,0x07,0x87,0x6F,0x26,0x00,0x19,0x7E,0x23,0x66,0x6F,0xE5
-039++ 87D4 DD7E06DD7707876F2600197E23666FE5
-040++ 87E4                     defb    0x3E,0x3E,0xDD,0x77,0x06,0x87,0x6F,0x26,0x00,0x19,0x5E,0x23,0x56,0xE1,0xED,0x52
-040++ 87E4 3E3EDD7706876F2600195E2356E1ED52
-041++ 87F4                     defb    0xDD,0x75,0x0D,0xDD,0x74,0x0E,0xDD,0x5E,0xFA,0xDD,0x56,0xFB,0x3E,0x3E,0xFE,0x06
-041++ 87F4 DD750DDD740EDD5EFADD56FB3E3EFE06
-042++ 8804                     defb    0x38,0x09,0x11,0x11,0x11,0xDD,0x73,0xFA,0xDD,0x72,0xFB,0x0A,0x03,0x08,0x0A,0x03
-042++ 8804 3809111111DD73FADD72FB0A03080A03
-043++ 8814                     defb    0xA7,0x28,0x01,0xEB,0xED,0x52,0xF2,0xAE,0xC2,0x2F,0x08,0xED,0x44,0x08,0xDD,0x77
-043++ 8814 A72801EBED52F2AEC22F08ED4408DD77
-044++ 8824                     defb    0x0C,0x08,0xDD,0x77,0x0B,0xDD,0x36,0xFE,0x00,0xC9,0xDD,0xCB,0x09,0xD6,0x0A,0x03
-044++ 8824 0C08DD770BDD36FE00C9DDCB09D60A03
-045++ 8834                     defb    0xDD,0x77,0x0A,0xA7,0x20,0x07,0x3A,0x8D,0xC2,0xFE,0x07,0x9F,0x3C,0xDD,0x77,0xF9
-045++ 8834 DD770AA720073A8DC2FE079F3CDD77F9
-046++ 8844                     defb    0x0A,0x03,0x08,0x0A,0x03,0x18,0xD7,0x0A,0x03,0xDD,0x77,0xF5,0xC9,0x0A,0x03,0xDD
-046++ 8844 0A03080A0318D70A03DD77F5C90A03DD
-047++ 8854                     defb    0x77,0xF4,0xC9,0x0A,0x03,0xDD,0x77,0xFF,0xDD,0x77,0xFE,0x0A,0x03,0xDD,0x77,0x00
-047++ 8854 77F4C90A03DD77FFDD77FE0A03DD7700
-048++ 8864                     defb    0xAF,0xDD,0x77,0xF9,0xDD,0x77,0xFA,0xDD,0x77,0xFB,0xC9,0x0A,0x03,0x32,0xA1,0xC5
-048++ 8864 AFDD77F9DD77FADD77FBC90A0332A1C5
-049++ 8874                     defb    0x32,0xAB,0xC6,0x0A,0x03,0x6F,0x0A,0x03,0x67,0x22,0xA4,0xC5,0xC9,0x0A,0x03,0x32
-049++ 8874 32ABC60A036F0A036722A4C5C90A0332
-050++ 8884                     defb    0x45,0xC5,0xC9,0xDD,0x73,0x08,0x32,0xBB,0xC6,0x0A,0x03,0x67,0x0A,0x03,0x6F,0x22
-050++ 8884 45C5C9DD730832BBC60A03670A036F22
-051++ 8894                     defb    0xBC,0xC6,0xAF,0xDD,0x77,0xF4,0x32,0xAB,0xC6,0x67,0x6F,0x22,0xA9,0xC6,0xC9,0x87
-051++ 8894 BCC6AFDD77F432ABC6676F22A9C6C987
-052++ 88A4                     defb    0x5F,0x16,0x00,0xDD,0x72,0xF4,0x21,0x21,0x21,0x19,0x5E,0x23,0x56,0x21,0x21,0x21
-052++ 88A4 5F1600DD72F4212121195E2356212121
-053++ 88B4                     defb    0x19,0xDD,0x75,0x01,0xDD,0x74,0x02,0xC9,0x2E,0xC3,0xBA,0xC2,0x4F,0xC2,0xD7,0xC2
-053++ 88B4 19DD7501DD7402C92EC3BAC24FC2D7C2
-054++ 88C4                     defb    0xDD,0xC2,0xE3,0xC2,0x2E,0xC3,0x2E,0xC3,0xFB,0xC2,0x0D,0xC3,0x2E,0xC3,0x2E,0xC3
-054++ 88C4 DDC2E3C22EC32EC3FBC20DC32EC32EC3
-055++ 88D4                     defb    0x2E,0xC3,0x2E,0xC3,0x2E,0xC3,0x2E,0xC3,0xAF,0x32,0xB8,0xC6,0xDD,0xCB,0x15,0x46
-055++ 88D4 2EC32EC32EC32EC3AF32B8C6DDCB1546
-056++ 88E4                     defb    0xE5,0xCA,0x96,0xC4,0xED,0x73,0xE1,0xC3,0xDD,0x6E,0x0D,0xDD,0x66,0x0E,0xF9,0xD1
-056++ 88E4 E5CA96C4ED73E1C3DD6E0DDD660EF9D1
-057++ 88F4                     defb    0x67,0xDD,0x7E,0x00,0x6F,0x39,0x3C,0xBA,0x38,0x01,0x7B,0xDD,0x77,0x00,0xDD,0x7E
-057++ 88F4 67DD7E006F393CBA38017BDD7700DD7E
-058++ 8904                     defb    0x12,0x86,0xF2,0x96,0xC3,0xAF,0xFE,0x60,0x38,0x02,0x3E,0x5F,0x87,0x08,0xDD,0x6E
-058++ 8904 1286F296C3AFFE6038023E5F8708DD6E
-059++ 8914                     defb    0x0F,0xDD,0x66,0x10,0xF9,0xD1,0x26,0x00,0xDD,0x7E,0x01,0x47,0x87,0x87,0x6F,0x39
-059++ 8914 0FDD6610F9D12600DD7E014787876F39
-060++ 8924                     defb    0xF9,0x78,0x3C,0xBA,0x38,0x01,0x7B,0xDD,0x77,0x01,0xC1,0xE1,0xDD,0x5E,0x08,0xDD
-060++ 8924 F9783CBA38017BDD7701C1E1DD5E08DD
-061++ 8934                     defb    0x56,0x09,0x19,0xCB,0x70,0x28,0x06,0xDD,0x75,0x08,0xDD,0x74,0x09,0xEB,0x08,0x6F
-061++ 8934 560919CB702806DD7508DD7409EB086F
-062++ 8944                     defb    0x26,0x00,0x31,0xAE,0xC7,0x39,0xF9,0xE1,0x19,0xDD,0x5E,0x06,0xDD,0x56,0x07,0x19
-062++ 8944 260031AEC739F9E119DD5E06DD560719
-063++ 8954                     defb    0x31,0x31,0x31,0xE3,0xAF,0xDD,0xB6,0x05,0x28,0x3E,0xDD,0x35,0x05,0x20,0x39,0xDD
-063++ 8954 313131E3AFDDB605283EDD35052039DD
-064++ 8964                     defb    0x7E,0x16,0xDD,0x77,0x05,0xDD,0x6E,0x17,0xDD,0x66,0x18,0x7C,0x19,0xDD,0x75,0x06
-064++ 8964 7E16DD7705DD6E17DD66187C19DD7506
-065++ 8974                     defb    0xDD,0x74,0x07,0xDD,0xCB,0x15,0x56,0x20,0x1F,0xDD,0x5E,0x19,0xDD,0x56,0x1A,0xA7
-065++ 8974 DD7407DDCB1556201FDD5E19DD561AA7
-066++ 8984                     defb    0x28,0x01,0xEB,0xED,0x52,0xFA,0x28,0xC4,0xDD,0x7E,0x13,0xDD,0x77,0x12,0xAF,0xDD
-066++ 8984 2801EBED52FA28C4DD7E13DD7712AFDD
-067++ 8994                     defb    0x77,0x05,0xDD,0x77,0x06,0xDD,0x77,0x07,0xDD,0x7E,0x02,0xCB,0x79,0x28,0x13,0xCB
-067++ 8994 7705DD7706DD7707DD7E02CB792813CB
-068++ 89A4                     defb    0x71,0x28,0x07,0xFE,0x0F,0x28,0x0B,0x3C,0x18,0x05,0xFE,0xF1,0x28,0x04,0x3D,0xDD
-068++ 89A4 712807FE0F280B3C1805FEF128043DDD
-069++ 89B4                     defb    0x77,0x02,0x6F,0x78,0xE6,0x0F,0x85,0xF2,0x4B,0xC4,0xAF,0xFE,0x10,0x38,0x02,0x3E
-069++ 89B4 77026F78E60F85F24BC4AFFE1038023E
-070++ 89C4                     defb    0x0F,0xDD,0xB6,0x1C,0x6F,0x26,0x00,0x11,0xAE,0xC6,0x19,0x7E,0xCB,0x41,0x20,0x03
-070++ 89C4 0FDDB61C6F260011AEC6197ECB412003
-071++ 89D4                     defb    0xDD,0xB6,0x14,0x32,0xB8,0xC6,0xCB,0x78,0x79,0x28,0x19,0x17,0x17,0xCB,0x2F,0xCB
-071++ 89D4 DDB61432B8C6CB787928191717CB2FCB
-072++ 89E4                     defb    0x2F,0xCB,0x2F,0xDD,0x86,0x04,0xCB,0x68,0x28,0x03,0xDD,0x77,0x04,0x21,0x85,0xC5
-072++ 89E4 2FCB2FDD8604CB682803DD77042185C5
-073++ 89F4                     defb    0x86,0x77,0x18,0x0E,0x1F,0xDD,0x86,0x03,0x32,0xAD,0xC6,0xCB,0x68,0x28,0x03,0xDD
-073++ 89F4 8677180E1FDD860332ADC6CB682803DD
-074++ 8A04                     defb    0x77,0x03,0x78,0x1F,0xE6,0x48,0x21,0xB5,0xC6,0xB6,0x0F,0x77,0xE1,0xAF,0xDD,0xB6
-074++ 8A04 7703781FE64821B5C6B60F77E1AFDDB6
-075++ 8A14                     defb    0x0A,0xC8,0xDD,0x35,0x0A,0xC0,0xDD,0xAE,0x15,0xDD,0x77,0x15,0x1F,0xDD,0x7E,0x0B
-075++ 8A14 0AC8DD350AC0DDAE15DD77151FDD7E0B
-076++ 8A24                     defb    0x38,0x03,0xDD,0x7E,0x0C,0xDD,0x77,0x0A,0xC9,0xAF,0x32,0x85,0xC5,0x32,0xB5,0xC6
-076++ 8A24 3803DD7E0CDD770AC9AF3285C532B5C6
-077++ 8A34                     defb    0x3D,0x32,0xBB,0xC6,0x21,0xA8,0xC6,0x35,0x20,0x7F,0x21,0x6C,0xC6,0x35,0x20,0x4C
-077++ 8A34 3D32BBC621A8C635207F216CC635204C
-078++ 8A44                     defb    0x01,0x01,0x01,0x0A,0xA7,0x20,0x3A,0x57,0x32,0xAC,0xC6,0x2A,0x0B,0xC0,0x23,0x7E
-078++ 8A44 0101010AA7203A5732ACC62A0BC0237E
-079++ 8A54                     defb    0x3C,0x20,0x08,0xCD,0x22,0xC0,0x21,0x21,0x21,0x7E,0x3C,0x22,0x0B,0xC0,0x3D,0x87
-079++ 8A54 3C2008CD22C02121217E3C220BC03D87
-080++ 8A64                     defb    0x5F,0xCB,0x12,0x21,0x21,0x21,0x19,0xED,0x5B,0xA8,0xC1,0xED,0x73,0x0F,0xC5,0xF9
-080++ 8A64 5FCB1221212119ED5BA8C1ED730FC5F9
-081++ 8A74                     defb    0xE1,0x19,0x44,0x4D,0xE1,0x19,0x22,0x27,0xC5,0xE1,0x19,0x22,0x3B,0xC5,0x31,0x31
-081++ 8A74 E119444DE1192227C5E119223BC53131
-082++ 8A84                     defb    0x31,0xDD,0x21,0x5D,0xC6,0xCD,0xE5,0xC1,0xED,0x43,0xD1,0xC4,0x21,0x89,0xC6,0x35
-082++ 8A84 31DD215DC6CDE5C1ED43D1C42189C635
-083++ 8A94                     defb    0x20,0x0E,0xDD,0x21,0x7A,0xC6,0x01,0x01,0x01,0xCD,0xE5,0xC1,0xED,0x43,0x27,0xC5
-083++ 8A94 200EDD217AC6010101CDE5C1ED4327C5
-084++ 8AA4                     defb    0x21,0xA6,0xC6,0x35,0x20,0x0E,0xDD,0x21,0x97,0xC6,0x01,0x01,0x01,0xCD,0xE5,0xC1
-084++ 8AA4 21A6C635200EDD2197C6010101CDE5C1
-085++ 8AB4                     defb    0xED,0x43,0x3B,0xC5,0x3E,0x3E,0x32,0xA8,0xC6,0xDD,0x21,0x51,0xC6,0x2A,0xAE,0xC6
-085++ 8AB4 ED433BC53E3E32A8C6DD2151C62AAEC6
-086++ 8AC4                     defb    0xCD,0x68,0xC3,0x22,0xAE,0xC6,0x3A,0xB8,0xC6,0x32,0xB6,0xC6,0xDD,0x21,0x6E,0xC6
-086++ 8AC4 CD68C322AEC63AB8C632B6C6DD216EC6
-087++ 8AD4                     defb    0x2A,0xB0,0xC6,0xCD,0x68,0xC3,0x22,0xB0,0xC6,0x3A,0xB8,0xC6,0x32,0xB7,0xC6,0xDD
-087++ 8AD4 2AB0C6CD68C322B0C63AB8C632B7C6DD
-088++ 8AE4                     defb    0x21,0x8B,0xC6,0x2A,0xB2,0xC6,0xCD,0x68,0xC3,0x22,0xB2,0xC6,0x2A,0xAC,0xC6,0x7C
-088++ 8AE4 218BC62AB2C6CD68C322B2C62AACC67C
-089++ 8AF4                     defb    0x85,0x32,0xB4,0xC6,0x3E,0x3E,0x5F,0x87,0x9F,0x57,0x2A,0xBC,0xC6,0x19,0xED,0x5B
-089++ 8AF4 8532B4C63E3E5F879F572ABCC619ED5B
-090++ 8B04                     defb    0xA9,0xC6,0x19,0x22,0xB9,0xC6,0xAF,0x21,0xAB,0xC6,0xB6,0x28,0x0E,0x35,0x20,0x0A
-090++ 8B04 A9C61922B9C6AF21ABC6B6280E35200A
-091++ 8B14                     defb    0x3E,0x3E,0x77,0x21,0x21,0x21,0x19,0x22,0xA9,0xC6,0xAF,0x11,0xBF,0xFF,0x01,0xFD
-091++ 8B14 3E3E772121211922A9C6AF11BFFF01FD
-092++ 8B24                     defb    0xFF,0x21,0xAE,0xC6,0xED,0x79,0x43,0xED,0xA3,0x42,0x3C,0xFE,0x0D,0x20,0xF5,0xED
-092++ 8B24 FF21AEC6ED7943EDA3423CFE0D20F5ED
-093++ 8B34                     defb    0x79,0x7E,0xA7,0xF8,0x43,0xED,0x79,0xC9,0x64,0x2A,0x65,0x00,0x01,0x0C,0x01,0x0C
-093++ 8B34 797EA7F843ED79C9642A6500010C010C
-094++ 8B44                     defb    0x94,0x35,0x30,0x0E,0x60,0x20,0x60,0x21,0x01,0x05,0x09,0x0B,0x0D,0x0F,0x13,0x15
-094++ 8B44 9435300E602060210105090B0D0F1315
-095++ 8B54                     defb    0x19,0x25,0x3D,0x00,0x5D,0x00,0x31,0x37,0x4D,0x53,0x5F,0x71,0x82,0x8C,0x9C,0x9E
-095++ 8B54 19253D005D0031374D535F71828C9C9E
-096++ 8B64                     defb    0xA0,0xA6,0xA8,0xAA,0xAC,0xAE,0xAE,0x00,0x57,0x1F,0x23,0x25,0x29,0x2D,0x2F,0x33
-096++ 8B64 A0A6A8AAACAEAE00571F2325292D2F33
-097++ 8B74                     defb    0xBF,0x00,0x1D,0x21,0x23,0x27,0x2B,0x2D,0x31,0x55,0xBD,0xBF,0x00,0x1B,0x21,0x25
-097++ 8B74 BF001D2123272B2D3155BDBF001B2125
-098++ 8B84                     defb    0x29,0x2B,0x3B,0x4D,0x5F,0xBB,0xBD,0xBF,0x00,0x01,0x00,0x90,0x0D,0xD8,0x69,0x70
-098++ 8B84 292B3B4D5FBBBDBF000100900DD86970
-099++ 8B94                     defb    0x76,0x7D,0x85,0x8D,0x95,0x9D,0xA8,0xB1,0xBB,0x0C,0xDA,0x62,0x68,0x6D,0x75,0x7B
-099++ 8B94 767D858D959DA8B1BB0CDA62686D757B
-100++ 8BA4                     defb    0x83,0x8A,0x92,0x9C,0xA4,0xAF,0xB8,0x0E,0x08,0x6A,0x72,0x78,0x7E,0x86,0x90,0x96
-100++ 8BA4 838A929CA4AFB80E086A72787E869096
-101++ 8BB4                     defb    0xA0,0xAA,0xB4,0xBE,0x0F,0xC0,0x78,0x88,0x80,0x90,0x98,0xA0,0xB0,0xA8,0xE0,0xB0
-101++ 8BB4 A0AAB4BE0FC07888809098A0B0A8E0B0
-102++ 8BC4 E8                  defb    0xE8
-645+  8BC5                     ; listing on
-646+  8BC5             sz_vtpl: equ     $-vtpl
-647+  8BC5             
-648+  8BC5             ;------------------------------
-649+  8BC5                     include "utils.asm"
-001++ 8BC5             ;-----------------------------------------------
-002++ 8BC5             ;  если нажат <CTRL+Z>
-003++ 8BC5             ;	C=1, A=0FFh
-004++ 8BC5             tst_brk: 
-005++ 8BC5 0E 31               ld	c,Dss.ScanKey
-006++ 8BC7 D7          	rst	#10
-007++ 8BC8 28 0F               jr      z,.no_keys      ;Не нажата ни одна кнопка
-008++ 8BCA CB 68               BIT	5,B             ;При нажатом Ctrl
-009++ 8BCC 28 0B               jr      z,.no_keys
-010++ 8BCE 7A                  ld      a,d
-011++ 8BCF E6 7F               and     #7f
-012++ 8BD1 FE 2A               cp      #2a             ;Ctrl+Z
-013++ 8BD3 20 04               jr      nz,.no_keys
-014++ 8BD5 AF                  xor	a
-015++ 8BD6 3D          	dec	a		;Z=0, CY=0
-016++ 8BD7 37                  scf
-017++ 8BD8 C9                  ret
-018++ 8BD9             .no_keys: 
-019++ 8BD9 A7                  and     a
-020++ 8BDA C9                  ret
-021++ 8BDB             
-022++ 8BDB             ;Процессор работает на частоте 21мгц (21000000Гц). Однако из-за задержек
-023++ 8BDB             ;в работе с памятью итоговая частота будет в районе 12.3мгц (252896 тактов в инте).
-024++ 8BDB             __CPU_CLOCK		equ 13816406
-025++ 8BDB             ;__CPU_CLOCK		equ 21000000
-026++ 8BDB             
-027++ 8BDB             ;hl = delay in ms
-028++ 8BDB 5D          __delay: 	ld e,l
-029++ 8BDC 54          		ld d,h
-030++ 8BDD 1B          .ms_loop: 	dec de
-031++ 8BDE 7A          		ld a,d
-032++ 8BDF B3          		or e
-033++ 8BE0 28 06       		jr z,.last_ms
-034++ 8BE2             
-035++ 8BE2 21 CD 35    		ld hl,(__CPU_CLOCK / 1000) - 43
-036++ 8BE5 CD EB 8B    		call .delay_tstate
-037++ 8BE8             
-038++ 8BE8             ; we will be exact
-039++ 8BE8 21 C2 35    .last_ms: 	ld hl,+(__CPU_CLOCK / 1000) - 54
-040++ 8BEB             
-041++ 8BEB 01 73 FF    .delay_tstate: 	ld bc,-141
-042++ 8BEE 09          		add hl,bc
-043++ 8BEF 01 E9 FF    		ld bc,-23
-044++ 8BF2 09          .loop: 		add hl,bc
-045++ 8BF3 38 FD       		jr c,.loop
-046++ 8BF5 7D          		ld a,l
-047++ 8BF6 C6 0F       		add a,15
-048++ 8BF8 30 06       		jr nc,.g0
-049++ 8BFA FE 08       		cp 8
-050++ 8BFC 38 03       		jr c,.g1
-051++ 8BFE F6 00       		or 0
-052++ 8C00 23          .g0: 		inc hl
-053++ 8C01 1F          .g1: 		rra
-054++ 8C02 38 01       		jr c,.b0
-055++ 8C04             
-056++ 8C04 00          		nop
-057++ 8C05             
-058++ 8C05 1F          .b0: 		rra
-059++ 8C06 30 02       		jr nc,.b1
-060++ 8C08 F6 00       		or 0
-061++ 8C0A 1F          .b1: 		rra
-062++ 8C0B D0          		ret nc
-063++ 8C0C C9          		ret
-064++ 8C0D             
-065++ 8C0D             ;=========================================
-066++ 8C0D             scan_key: 
-067++ 8C0D 0E 31       	ld	c,Dss.ScanKey
-068++ 8C0F D7          	rst	10h
-069++ 8C10 C9          	ret
-070++ 8C11             ;=========================================
-071++ 8C11 E5          prn_a: 	push	hl
-072++ 8C12 0E 5B       	ld	c,Dss.PutChar
-073++ 8C14             	; cp	TAB		; TAB
-074++ 8C14             	; jr	nz,no_tab
-075++ 8C14             	; ld	a,' '		;заменить на пробел
-076++ 8C14 D7          no_tab: 	RST	10h
-077++ 8C15 E1          	pop	hl
-078++ 8C16 C9          	RET
-079++ 8C17             ;=========================================
-080++ 8C17 0E 5C       prn_tx: 	ld	c,Dss.PChars
-081++ 8C19 D7          	rst	10h
-082++ 8C1A C9          	ret
-083++ 8C1B             ;-----------------------------------------
-084++ 8C1B             clear_screen: 
-085++ 8C1B 11 00 00    	ld	de,0
-086++ 8C1E AF          	xor	a
-087++ 8C1F D5          	push	de
-088++ 8C20 21 50 20    	ld	hl,2050h
-089++ 8C23 06 07       	ld	b,7
-090++ 8C25 0E 56       	ld	c,Dss.Clear
-091++ 8C27 D7          	rst	10h
-092++ 8C28 D1          	pop	de
-093++ 8C29 0E 52       	ld	c,Dss.Locate
-094++ 8C2B D7          	rst	10h
-095++ 8C2C C9          	ret
-650+  8C2D                     include "isa.asm"        
-001++ 8C2D             ;If you want to interaction with ISA devices, you have to make following steps:
-002++ 8C2D             ;1) send 10h value to port 1FFDh(system port);
-003++ 8C2D             ;2) send control byte to port 0E2h(third memory window port);
-004++ 8C2D             ;control byte:
-005++ 8C2D             ;D7...should be 1
-006++ 8C2D             ;D6...should be 1
-007++ 8C2D             ;D5...should be 0
-008++ 8C2D             ;D4...should be 1
-009++ 8C2D             ;D3...should be 0
-010++ 8C2D             ;D2...specify number of ISA slot
-011++ 8C2D             ;D1...specify access mode (0 - ISA memory, 1 - ISA ports)
-012++ 8C2D             ;D0...should be 0
-013++ 8C2D             
-014++ 8C2D             ;The read/write signals are forming from read/write signals memory range 0C000h-0FFFFh.
-015++ 8C2D             ;And the address lines A13...A0 has taken from processor data-BUS.
-016++ 8C2D             ;The other ISA-signals such as RESET, AEN, A19...A14 can be set in port 9FBDh. And default value is 00h.
-017++ 8C2D             ;port 9FBDh:
-018++ 8C2D             ;D7...RESET
-019++ 8C2D             ;D6...AEN
-020++ 8C2D             ;D5...A19
-021++ 8C2D             ;D4...A18
-022++ 8C2D             ;D3...A17
-023++ 8C2D             ;D2...A16
-024++ 8C2D             ;D1...A15
-025++ 8C2D             ;D0...A14
-026++ 8C2D             
-027++ 8C2D             isa_init: 
-028++ 8C2D CD 34 8C            call reset_isa
-029++ 8C30 CD 48 8C            call open_isa_ports
-030++ 8C33 C9                  ret
-031++ 8C34             
-032++ 8C34             ; reset ISA device
-033++ 8C34             reset_isa: 
-034++ 8C34 01 BD 9F            ld bc,Port.ISA
-035++ 8C37 3E C0               ld a,0xc0
-036++ 8C39 ED 79               out (c),a
-037++ 8C3B C5                  push bc
-038++ 8C3C 21 14 00            ld hl,20
-039++ 8C3F CD DB 8B            call __delay
-040++ 8C42 C1                  pop bc
-041++ 8C43 3E 00               ld a,0
-042++ 8C45 ED 79               out (c),a
-043++ 8C47 C9                  ret
-044++ 8C48             
-045++ 8C48             open_isa_ports: 
-046++ 8C48 F5                  push af
-047++ 8C49 C5                  push bc
-048++ 8C4A DB E2               in a,(EmmWin.P3)
-049++ 8C4C 32 75 8C            ld (save_mmu3),a
-050++ 8C4F 01 FD 1F            ld bc,Port.System
-051++ 8C52 3E 11               ld a,0x11
-052++ 8C54 ED 79               out (c),a
-053++ 8C56 3E D4               ld a,0xd4
-054++ 8C58 D3 E2               out (EmmWin.P3),a
-055++ 8C5A 01 BD 9F            ld bc,Port.ISA
-056++ 8C5D 3E 00               ld a,0
-057++ 8C5F ED 79               out (c),a
-058++ 8C61 C1                  pop bc
-059++ 8C62 F1                  pop af
-060++ 8C63 C9                  ret
-061++ 8C64             
-062++ 8C64             
-063++ 8C64             close_isa_ports: 
-064++ 8C64 F5                  push af
-065++ 8C65 C5                  push bc
-066++ 8C66 01 FD 1F            ld bc,Port.System
-067++ 8C69 3E 01               ld a,1
-068++ 8C6B ED 79               out (c),a
-069++ 8C6D 3A 75 8C            ld a,(save_mmu3)
-070++ 8C70 D3 E2               out (EmmWin.P3),a
-071++ 8C72 C1                  pop bc
-072++ 8C73 F1                  pop af
-073++ 8C74 C9                  ret
-074++ 8C75 00          save_mmu3       db 0
-651+  8C76             ;------------------------------
-652+  8C76             tabl_ptrurl: 
-653+  8C76 BD 90 53 90         defw    str_rqsz1,str_uri1
-654+  8C7A 1A 91 C1 90         defw    str_rqsz2,str_uri2
-655+  8C7E 87 91 1E 91         defw    str_rqsz3,str_uri3
-656+  8C82 DE 91 8B 91         defw    str_rqsz4,str_uri4
-657+  8C86 3B 92 E2 91         defw    str_rqsz5,str_uri5
-658+  8C8A 93 92 3F 92         defw    str_rqsz6,str_uri6
-659+  8C8E F6 92 97 92         defw    str_rqsz7,str_uri7
-660+  8C92 4F 93 FA 92         defw    str_rqsz8,str_uri8
-661+  8C96 A6 93 53 93         defw    str_rqsz9,str_uri9
-662+  8C9A             ;------------------------------
-663+  8C9A             msgff_timeout:   defb    19,1,13,16,2,"- Timeout! -",16,5,13,0xff
-663+  8C9A 13010D10022D2054696D656F757421202D10050DFF
-664+  8CAF             msgff_error:     defb    19,1,13,16,2,"- Error! -",16,5,13,0xff
-664+  8CAF 13010D10022D204572726F7221202D10050DFF
-665+  8CC2             
-666+  8CC2             msg_no_comport:  defb    "COM-port is not found!",13,10,0
-666+  8CC2 434F4D2D706F7274206973206E6F7420666F756E64210D0A00
-667+  8CDB             
-668+  8CDB             msg_baudmenu:    defb    "Select baudrate:",13,10
-668+  8CDB 53656C6563742062617564726174653A0D0A
-669+  8CED                             defb    "1.115200",13,10
-669+  8CED 312E3131353230300D0A
-670+  8CF7                             defb    "2. 57600",13,10
-670+  8CF7 322E2035373630300D0A
-671+  8D01                             defb    "3. 38400",13,10
-671+  8D01 332E2033383430300D0A
-672+  8D0B                             defb    "4. 28800",13,10
-672+  8D0B 342E2032383830300D0A
-673+  8D15                             defb    "5. 19200",13,10
-673+  8D15 352E2031393230300D0A
-674+  8D1F                             defb    "6. 14400",13,10
-674+  8D1F 362E2031343430300D0A
-675+  8D29                             defb    "7.  9600",13,10,0
-675+  8D29 372E2020393630300D0A00
-676+  8D34             msg_req_vers:    defb    "Firmware version...",13,10,0
-676+  8D34 4669726D776172652076657273696F6E2E2E2E0D0A00
-677+  8D4A             msg_press_key:   defb    "Press a key",13,10,0
-677+  8D4A 50726573732061206B65790D0A00
-678+  8D58             msg_chg_baud:    defb    "Change baudrate...",13,10,0
-678+  8D58 4368616E67652062617564726174652E2E2E0D0A00
-679+  8D6D             msg_ap_list:     defb    "AccessPoint list...",13,10,0
-679+  8D6D 416363657373506F696E74206C6973742E2E2E0D0A00
-680+  8D83             msg_repeat:      defb    "R - repeat, else continue",13,10,0
-680+  8D83 52202D207265706561742C20656C736520636F6E74696E75650D0A00
-681+  8D9F             msg_ap_conn:     defb    "Connect to AccessPoint...",13,10,0
-681+  8D9F 436F6E6E65637420746F20416363657373506F696E742E2E2E0D0A00
-682+  8DBB             msg_ipcfg:       defb    "IP config info...",13,10,0
-682+  8DBB 495020636F6E66696720696E666F2E2E2E0D0A00
-683+  8DCF             msg_ping:        defb    "Ping...",13,10,0
-683+  8DCF 50696E672E2E2E0D0A00
-684+  8DD9             msg_menuload:    defb    "Now, we can try to load some",13,10
-684+  8DD9 4E6F772C2077652063616E2074727920746F206C6F616420736F6D650D0A
-685+  8DF7                             defb    "pre-defined resources",13,10
-685+  8DF7 7072652D646566696E6564207265736F75726365730D0A
-686+  8E0E                             defb    "from the Internet.",13,10
-686+  8E0E 66726F6D2074686520496E7465726E65742E0D0A
-687+  8E22                             defb    "1. scr #1",13,10
-687+  8E22 312E207363722023310D0A
-688+  8E2D                             defb    "2. scr #2",13,10
-688+  8E2D 322E207363722023320D0A
-689+  8E38                             defb    "3. scr #3",13,10
-689+  8E38 332E207363722023330D0A
-690+  8E43                             defb    "4. gigascr #1",13,10
-690+  8E43 342E20676967617363722023310D0A
-691+  8E52                             defb    "5. gigascr #2",13,10
-691+  8E52 352E20676967617363722023320D0A
-692+  8E61                             defb    "6. gigascr #3",13,10
-692+  8E61 362E20676967617363722023330D0A
-693+  8E70                             defb    "7. pt3 #1",13,10
-693+  8E70 372E207074332023310D0A
-694+  8E7B                             defb    "8. pt3 #2",13,10
-694+  8E7B 382E207074332023320D0A
-695+  8E86                             defb    "9. pt3 #3",13,10,0
-695+  8E86 392E207074332023330D0A00
-696+  8E92             msg_open_tcp:    defb    "Open TCP connection...",13,10,0
-696+  8E92 4F70656E2054435020636F6E6E656374696F6E2E2E2E0D0A00
-697+  8EAB             msg_musply:      defb    13,10,"PT3-module playing"
-697+  8EAB 0D0A5054332D6D6F64756C6520706C6179696E67
-698+  8EBF 2E 2E 2E 00 msg_skip:        defb    "...",0
-699+  8EC3             
-700+  8EC3 41 54 45 30 cmd_ate0:        defb    "ATE0"
-701+  8EC7 0D 0A 00    str_crlf:        defb    13,10,0
-702+  8ECA             cmd_gmr:         defb    "AT+GMR",13,10,0
-702+  8ECA 41542B474D520D0A00
-703+  8ED3             cmd_uart_9600:   defb    "AT+UART_CUR=9600,8,1,0,0",13,10,0
-703+  8ED3 41542B554152545F4355523D393630302C382C312C302C300D0A00
-704+  8EEE             cmd_cwmode:      defb    "AT+CWMODE_DEF=1",13,10,0
-704+  8EEE 41542B43574D4F44455F4445463D310D0A00
-705+  8F00             cmd_cwautoconn:  defb    "AT+CWAUTOCONN=0",13,10,0
-705+  8F00 41542B43574155544F434F4E4E3D300D0A00
-706+  8F12             cmd_cwqap:       defb    "AT+CWQAP",13,10,0
-706+  8F12 41542B43575141500D0A00
-707+  8F1D             cmd_cwlap:       defb    "AT+CWLAP",13,10,0
-707+  8F1D 41542B43574C41500D0A00
-708+  8F28             cmd_cwjap:       defb    "AT+CWJAP_CUR=",0x22
-708+  8F28 41542B43574A41505F4355523D22
-709+  8F36                             defb    "wifitest123"                           ; SSID
-709+  8F36 7769666974657374313233
-710+  8F41 22 2C 22                    defb    0x22,0x2c,0x22
-711+  8F44                             defb    "ZXSpectrumForeverHelloEverybody321"    ; password
-711+  8F44 5A58537065637472756D466F726576657248656C6C6F4576657279626F647933
-711+  8F64 3231
-712+  8F66 22 0D 0A 00                 defb    0x22,13,10,0
-713+  8F6A             cmd_cipsta:      defb    "AT+CIPSTA?",13,10,0
-713+  8F6A 41542B4349505354413F0D0A00
-714+  8F77             cmd_ping_g:      defb    "AT+PING=",0x22,"google.com",0x22,13,10,0
-714+  8F77 41542B50494E473D22676F6F676C652E636F6D220D0A00
-715+  8F8E             cmd_ping_y:      defb    "AT+PING=",0x22,"yandex.ru",0x22,13,10,0
-715+  8F8E 41542B50494E473D2279616E6465782E7275220D0A00
-716+  8FA4             cmd_conn2site:   defb    "AT+CIPSTART=",0x22,"TCP",0x22,",",0x22
-716+  8FA4 41542B43495053544152543D22544350222C22
-717+  8FB7                             defb    "zxart.ee"                              ; site
-717+  8FB7 7A786172742E6565
-718+  8FBF                             defb    0x22,",80",13,10,0
-718+  8FBF 222C38300D0A00
-719+  8FC6             cmd_cipsend:     defb    "AT+CIPSEND=",0
-719+  8FC6 41542B43495053454E443D00
-720+  8FD2             
-721+  8FD2 4745542000  str_get1:        defb    "GET ",0 ;size=4
-722+  8FD7             str_get2:        defb    " HTTP/1.1",13,10 ;size=123
-722+  8FD7 20485454502F312E310D0A
-723+  8FE2                             defb    "Host: zxart.ee",13,10
-723+  8FE2 486F73743A207A786172742E65650D0A
-724+  8FF2                             defb    "User-Agent: ESP8266-probe1 (ZX Spectrum; CPU Z80; RAM 128Kb)",13,10    ; show off ;)
-724+  8FF2 557365722D4167656E743A20455350383236362D70726F62653120285A582053
-724+  9012 7065637472756D3B20435055205A38303B2052414D203132384B62290D0A
-725+  9030                             defb    "Accept: */*",13,10
-725+  9030 4163636570743A202A2F2A0D0A
-726+  903D                             defb    "Connection: close",13,10,13,10,0
-726+  903D 436F6E6E656374696F6E3A20636C6F73650D0A0D0A00
-727+  9053             
-728+  9053             str_uri1:        defb    "/file/id:61049/filename:%D0%9A%D0%90%D0%A1%D0%B8%D0%BA_-_Banka_%282015%29_%283BM_OpenAir_2015%2C_3%29.scr",0 ;size=105
-728+  9053 2F66696C652F69643A36313034392F66696C656E616D653A2544302539412544
-728+  9073 302539302544302541312544302542382544302542415F2D5F42616E6B615F25
-728+  9093 3238323031352532395F25323833424D5F4F70656E4169725F32303135253243
-728+  90B3 5F332532392E73637200
-729+  90BD 32 33 32 00 str_rqsz1:       defb    "232",0 ;232=4+105+123=get1+uri1+get2
-730+  90C1             
-731+  90C1             str_uri2:        defb    "/file/id:61053/filename:Buddy_-_Drunk_Kung-Fu_%282015%29_%283BM_OpenAir_2015%2C_5%29.scr",0 ;size=88
-731+  90C1 2F66696C652F69643A36313035332F66696C656E616D653A42756464795F2D5F
-731+  90E1 4472756E6B5F4B756E672D46755F253238323031352532395F25323833424D5F
-731+  9101 4F70656E4169725F323031352532435F352532392E73637200
-732+  911A 32 31 35 00 str_rqsz2:       defb    "215",0 ;215=4+88+123=get1+uri2+get2
-733+  911E             
-734+  911E             str_uri3:        defb    "/file/id:61058/filename:brightentayle_-_The_Split_Foundations_%282015%29_%283BM_OpenAir_2015%2C_6%29.scr",0 ;size=104
-734+  911E 2F66696C652F69643A36313035382F66696C656E616D653A627269676874656E
-734+  913E 7461796C655F2D5F5468655F53706C69745F466F756E646174696F6E735F2532
-734+  915E 38323031352532395F25323833424D5F4F70656E4169725F323031352532435F
-734+  917E 362532392E73637200
-735+  9187 32 33 31 00 str_rqsz3:       defb    "231",0 ;231=4+104+123=get1+uri3+get2
-736+  918B             
-737+  918B             str_uri4:        defb    "/file/id:61060/filename:Tutty_-_Bat2Con_%282015%29_%283BM_OpenAir_2015%2C_1%29.img",0 ;size=82
-737+  918B 2F66696C652F69643A36313036302F66696C656E616D653A54757474795F2D5F
-737+  91AB 42617432436F6E5F253238323031352532395F25323833424D5F4F70656E4169
-737+  91CB 725F323031352532435F312532392E696D6700
-738+  91DE 32 30 39 00 str_rqsz4:       defb    "209",0 ;209=4+82+123=get1+uri4+get2
-739+  91E2             
-740+  91E2             str_uri5:        defb    "/file/id:61059/filename:Dimidrol_-_Amur_tiger_%282015%29_%283BM_OpenAir_2015%2C_2%29.img",0 ;size=88
-740+  91E2 2F66696C652F69643A36313035392F66696C656E616D653A44696D6964726F6C
-740+  9202 5F2D5F416D75725F74696765725F253238323031352532395F25323833424D5F
-740+  9222 4F70656E4169725F323031352532435F322532392E696D6700
-741+  923B 32 31 35 00 str_rqsz5:       defb    "215",0 ;215=4+88+123=get1+uri5+get2
-742+  923F             
-743+  923F             str_uri6:        defb    "/file/id:61061/filename:prof4d_-_Fructus_%282015%29_%283BM_OpenAir_2015%2C_4%29.img",0 ;size=83
-743+  923F 2F66696C652F69643A36313036312F66696C656E616D653A70726F6634645F2D
-743+  925F 5F467275637475735F253238323031352532395F25323833424D5F4F70656E41
-743+  927F 69725F323031352532435F342532392E696D6700
-744+  9293 32 31 30 00 str_rqsz6:       defb    "210",0 ;210=4+83+123=get1+uri6+get2
-745+  9297             
-746+  9297             str_uri7:        defb    "/file/id:61065/filename:luchibobra_-_three_bad_mice_%282015%29_%283BM_OpenAir_2015%2C_1%29.pt3",0 ;size=94
-746+  9297 2F66696C652F69643A36313036352F66696C656E616D653A6C75636869626F62
-746+  92B7 72615F2D5F74687265655F6261645F6D6963655F253238323031352532395F25
-746+  92D7 323833424D5F4F70656E4169725F323031352532435F312532392E70743300
-747+  92F6 32 32 31 00 str_rqsz7:       defb    "221",0 ;221=4+94+123=get1+uri7+get2
-748+  92FA             
-749+  92FA             str_uri8:        defb    "/file/id:61067/filename:MmcM_-_summertime_%282015%29_%283BM_OpenAir_2015%2C_2%29.pt3",0 ;size=84
-749+  92FA 2F66696C652F69643A36313036372F66696C656E616D653A4D6D634D5F2D5F73
-749+  931A 756D6D657274696D655F253238323031352532395F25323833424D5F4F70656E
-749+  933A 4169725F323031352532435F322532392E70743300
-750+  934F 32 31 31 00 str_rqsz8:       defb    "211",0 ;211=4+84+123=get1+uri8+get2
-751+  9353             
-752+  9353             str_uri9:        defb    "/file/id:61066/filename:wbc_-_isglass-3_%282015%29_%283BM_OpenAir_2015%2C_3%29.pt3",0 ;size=82
-752+  9353 2F66696C652F69643A36313036362F66696C656E616D653A7762635F2D5F6973
-752+  9373 676C6173732D335F253238323031352532395F25323833424D5F4F70656E4169
-752+  9393 725F323031352532435F332532392E70743300
-753+  93A6 32 30 39 00 str_rqsz9:       defb    "209",0 ;209=4+82+123=get1+uri9+get2
-754+  93AA             
-755+  93AA 4F 4B 0D 00 str_ok:          defb    "OK",13,0
-756+  93AE             str_error:       defb    "ERROR",13,0
-756+  93AE 4552524F520D00
-757+  93B5             str_fail:        defb    "FAIL",13,0
-757+  93B5 4641494C0D00
-758+  93BB             str_send_ok:     defb    "SEND OK",13,0
-758+  93BB 53454E44204F4B0D00
-759+  93C4             str_ipd:         defb    13,10,"+IPD,",0
-759+  93C4 0D0A2B4950442C00
-760+  93CC             strbuff: 
-761+  93CC             ;------------------------------
-762+  93CC             end_addr: 
-003   93CC                     savebin "espprobe.exe",start_addr,end_addr-start_addr
-004   93CC             
+608+  8562 7B                  ld      a,e
+609+  8563 32 88 85            ld      (tmout),a
+610+  8566 0E 21               ld      c,Dss.SysTime
+611+  8568 D7                  rst     0x10
+612+  8569 78                  ld      a,b
+613+  856A 32 8A 85            ld      (lastsec),a
+614+  856D C9                  ret
+615+  856E                     ; ld      hl,(0x5c78)
+616+  856E                     ; add     hl,de
+617+  856E                     ; ld      (tmout),hl
+618+  856E                     ; ret
+619+  856E             ;------------------------------
+620+  856E             check_timeout: 
+621+  856E E5                  push    hl
+622+  856F D5                  push    de
+623+  8570 C5                  push    bc
+624+  8571 0E 21               ld      c,Dss.SysTime
+625+  8573 D7                  rst     0x10
+626+  8574 3A 8A 85            ld      a,(lastsec)
+627+  8577 B8                  cp      b
+628+  8578 78                  ld      a,b
+629+  8579 C1                  pop     bc
+630+  857A D1                  pop     de
+631+  857B E1                  pop     hl
+632+  857C C8                  ret     z
+633+  857D 32 8A 85            ld      (lastsec),a
+634+  8580 3A 88 85            ld      a,(tmout)
+635+  8583 3D                  dec     a
+636+  8584 32 88 85            ld      (tmout),a
+637+  8587 C9                  ret
+638+  8588                     ; push    hl
+639+  8588                     ; push    de
+640+  8588                     ; ld      de,(tmout)
+641+  8588                     ; ld      hl,(0x5c78)
+642+  8588                     ; xor     a
+643+  8588                     ; sbc     hl,de
+644+  8588                     ; pop     de
+645+  8588                     ; pop     hl
+646+  8588                     ; ret
+647+  8588             ;------------------------------
+648+  8588 00 00       tmout:   defw    0
+649+  858A 00          lastsec:  defb   0
+650+  858B 00 00       ptr:     defw    0
+651+  858D 00 00       packsz:  defw    0
+652+  858F 00          resnum:  defb    0
+653+  8590 07          color:   defb    7
+654+  8591             ;------------------------------
+655+  8591 00          udg:     defb    %00000000
+656+  8592 54                  defb    %01010100
+657+  8593 2A                  defb    %00101010
+658+  8594 54                  defb    %01010100
+659+  8595 2A                  defb    %00101010
+660+  8596 54                  defb    %01010100
+661+  8597 2A                  defb    %00101010
+662+  8598 00                  defb    %00000000
+663+  8599             ;------------------------------
+664+  8599             vtpl: 
+665+  8599                     ; listing off
+666+  8599                     include "vtplayer.inc"
+001++ 8599                     defb    0x21,0x6E,0xC8,0x18,0x3A,0xC3,0xB9,0xC4,0x18,0x29,0x00,0x00,0x00,0x3D,0x56,0x54
+001++ 8599 216EC8183AC3B9C418290000003D5654
+002++ 85A9                     defb    0x49,0x49,0x20,0x50,0x54,0x33,0x20,0x50,0x6C,0x61,0x79,0x65,0x72,0x20,0x72,0x2E
+002++ 85A9 49492050543320506C6179657220722E
+003++ 85B9                     defb    0x37,0x3D,0x21,0x0A,0xC0,0xCB,0xFE,0xCB,0x46,0xC8,0xE1,0x21,0xA8,0xC6,0x34,0x21
+003++ 85B9 373D210AC0CBFECB46C8E121A8C63421
+004++ 85C9                     defb    0x6C,0xC6,0x34,0xAF,0x67,0x6F,0x32,0xB6,0xC6,0x22,0xB7,0xC6,0xC3,0xAB,0xC5,0x22
+004++ 85C9 6CC634AF676F32B6C622B7C6C3ABC522
+005++ 85D9                     defb    0xA8,0xC1,0x22,0x3E,0xC3,0xE5,0x11,0x64,0x00,0x19,0x7E,0x32,0x45,0xC5,0xE5,0xDD
+005++ 85D9 A8C1223EC3E5116400197E3245C5E5DD
+006++ 85E9                     defb    0xE1,0x19,0x22,0x0B,0xC0,0xDD,0x5E,0x02,0x19,0x23,0x22,0xE7,0xC4,0xD1,0xDD,0x6E
+006++ 85E9 E119220BC0DD5E02192322E7C4D1DD6E
+007++ 85F9                     defb    0x03,0xDD,0x66,0x04,0x19,0x22,0xF4,0xC4,0x21,0xA9,0x00,0x19,0x22,0x37,0xC3,0x21
+007++ 85F9 03DD66041922F4C421A900192237C321
+008++ 8609                     defb    0x69,0x00,0x19,0x22,0xA1,0xC1,0x21,0x0A,0xC0,0xCB,0xBE,0x11,0x1C,0xC6,0x01,0x1F
+008++ 8609 69001922A1C1210AC0CBBE111CC6011F
+009++ 8619                     defb    0xC7,0x1A,0x13,0xFE,0x1E,0x30,0x06,0x67,0x1A,0x6F,0x13,0x18,0x07,0xD5,0x16,0x00
+009++ 8619 C71A13FE1E3006671A6F131807D51600
+010++ 8629                     defb    0x5F,0x19,0x19,0xD1,0x7C,0x02,0x0B,0x7D,0x02,0x0B,0xD6,0xF0,0x20,0xE3,0x21,0x51
+010++ 8629 5F1919D17C020B7D020BD6F020E32151
+011++ 8639                     defb    0xC6,0x77,0x11,0x52,0xC6,0x01,0x6C,0x00,0xED,0xB0,0x3C,0x32,0xA8,0xC6,0x21,0x01
+011++ 8639 C6771152C6016C00EDB03C32A8C62101
+012++ 8649                     defb    0xF0,0x22,0x6C,0xC6,0x22,0x89,0xC6,0x22,0xA6,0xC6,0x21,0x18,0xC6,0x22,0xD1,0xC4
+012++ 8649 F0226CC62289C622A6C62118C622D1C4
+013++ 8659                     defb    0x22,0x5E,0xC6,0x22,0x7B,0xC6,0x22,0x98,0xC6,0x22,0x60,0xC6,0x22,0x7D,0xC6,0x22
+013++ 8659 225EC6227BC62298C62260C6227DC622
+014++ 8669                     defb    0x9A,0xC6,0xDD,0x7E,0xA9,0xD6,0x30,0x38,0x04,0xFE,0x0A,0x38,0x02,0x3E,0x06,0x32
+014++ 8669 9AC6DD7EA9D6303804FE0A38023E0632
+015++ 8679                     defb    0x8D,0xC2,0xF5,0xFE,0x04,0xDD,0x7E,0xFF,0x17,0xE6,0x07,0x21,0xC8,0xC5,0xD5,0x50
+015++ 8679 8DC2F5FE04DD7EFF17E60721C8C5D550
+016++ 8689                     defb    0x87,0x5F,0x19,0x5E,0x23,0xCB,0x3B,0x9F,0xE6,0xA7,0x32,0x20,0xC1,0xEB,0xC1,0x09
+016++ 8689 875F195E23CB3B9FE6A73220C1EBC109
+017++ 8699                     defb    0x1A,0xC6,0xD8,0x4F,0xCE,0xC5,0x91,0x47,0xC5,0x11,0xAE,0xC7,0xD5,0x06,0x0C,0xC5
+017++ 8699 1AC6D84FCEC59147C511AEC7D5060CC5
+018++ 86A9                     defb    0x4E,0x23,0xE5,0x46,0xD5,0xEB,0x11,0x17,0x00,0xDD,0x26,0x08,0xCB,0x38,0xCB,0x19
+018++ 86A9 4E23E546D5EB111700DD2608CB38CB19
+019++ 86B9                     defb    0x19,0x79,0x8A,0x77,0x23,0x78,0x8A,0x77,0x19,0xDD,0x25,0x20,0xEF,0xD1,0x13,0x13
+019++ 86B9 19798A7723788A7719DD2520EFD11313
+020++ 86C9                     defb    0xE1,0x23,0xC1,0x10,0xDA,0xE1,0xD1,0x7B,0xFE,0xE4,0x20,0x05,0x3E,0xFD,0x32,0xDC
+020++ 86C9 E123C110DAE1D17BFEE420053EFD32DC
+021++ 86D9                     defb    0xC7,0x1A,0xA7,0x28,0x11,0x1F,0xF5,0x87,0x4F,0x09,0xF1,0x30,0x02,0x35,0x35,0x34
+021++ 86D9 C71AA728111FF5874F09F13002353534
+022++ 86E9                     defb    0xA7,0xED,0x42,0x13,0x18,0xEB,0xF1,0xFE,0x05,0x21,0x11,0x00,0x54,0x5C,0x3E,0x17
+022++ 86E9 A7ED421318EBF1FE05211100545C3E17
+023++ 86F9                     defb    0x30,0x03,0x2D,0x5D,0xAF,0x32,0x74,0xC1,0xDD,0x21,0xBE,0xC6,0x0E,0x10,0xE5,0x19
+023++ 86F9 30032D5DAF3274C1DD21BEC60E10E519
+024++ 8709                     defb    0xEB,0xED,0x62,0x7D,0x7D,0x7C,0xCE,0x00,0xDD,0x77,0x00,0xDD,0x23,0x19,0x0C,0x79
+024++ 8709 EBED627D7D7CCE00DD7700DD23190C79
+025++ 8719                     defb    0xE6,0x0F,0x20,0xEF,0xE1,0x7B,0xFE,0x77,0x20,0x01,0x1C,0x79,0xA7,0x20,0xDF,0xC3
+025++ 8719 E60F20EFE17BFE7720011C79A720DFC3
+026++ 8729                     defb    0xAB,0xC5,0xDD,0x36,0x08,0x00,0xCD,0x2F,0xC3,0x0A,0x03,0x0F,0x87,0x5F,0x16,0x00
+026++ 8729 ABC5DD360800CD2FC30A030F875F1600
+027++ 8739                     defb    0x21,0x21,0x21,0x19,0x5E,0x23,0x56,0x21,0x21,0x21,0x19,0xDD,0x75,0x03,0xDD,0x74
+027++ 8739 212121195E235621212119DD7503DD74
+028++ 8749                     defb    0x04,0x18,0x41,0x07,0x07,0x07,0x07,0xDD,0x77,0x10,0x18,0x3B,0xDD,0x77,0x08,0xDD
+028++ 8749 04184107070707DD7710183BDD7708DD
+029++ 8759                     defb    0x77,0xF4,0x18,0x33,0x3D,0x20,0x07,0x0A,0x03,0xDD,0x77,0x05,0x18,0x29,0xCD,0x13
+029++ 8759 77F418333D20070A03DD77051829CD13
+030++ 8769                     defb    0xC3,0x18,0x24,0xCD,0x2F,0xC3,0x18,0x1C,0xDD,0x77,0x08,0xDD,0x77,0xF4,0xC4,0x13
+030++ 8769 C31824CD2FC3181CDD7708DD77F4C413
+031++ 8779                     defb    0xC3,0x0A,0x03,0x18,0xB8,0xDD,0x7E,0x06,0x32,0x71,0xC2,0xDD,0x6E,0xFA,0xDD,0x66
+031++ 8779 C30A0318B8DD7E063271C2DD6EFADD66
+032++ 8789                     defb    0xFB,0x22,0x93,0xC2,0x11,0x10,0x20,0x0A,0x03,0x83,0x38,0x96,0x82,0x28,0x49,0x38
+032++ 8789 FB2293C21110200A0383389682284938
+033++ 8799                     defb    0x9B,0x83,0x28,0x25,0x38,0xAD,0x83,0x28,0xB3,0x38,0xB9,0xC6,0x60,0x38,0x20,0x83
+033++ 8799 9B83282538AD8328B338B9C660382083
+034++ 87A9                     defb    0x38,0xC1,0x82,0x38,0x0F,0x83,0x38,0xC0,0x87,0x5F,0x21,0x68,0xA2,0x19,0x5E,0x23
+034++ 87A9 38C182380F8338C0875F2168A2195E23
+035++ 87B9                     defb    0x56,0xD5,0x18,0xD0,0x32,0xAC,0xC6,0x18,0xCE,0xDD,0xCB,0x09,0x86,0x18,0x08,0xDD
+035++ 87B9 56D518D032ACC618CEDDCB09861808DD
+036++ 87C9                     defb    0x77,0x06,0xDD,0xCB,0x09,0xC6,0xAF,0xED,0x73,0x46,0xC2,0xDD,0xF9,0x67,0x6F,0xE5
+036++ 87C9 7706DDCB09C6AFED7346C2DDF9676FE5
+037++ 87D9                     defb    0xE5,0xE5,0xE5,0xE5,0xE5,0x31,0x31,0x31,0xDD,0x7E,0x05,0xDD,0x77,0x0F,0xC9,0xDD
+037++ 87D9 E5E5E5E5E5313131DD7E05DD770FC9DD
+038++ 87E9                     defb    0xCB,0x09,0x96,0x0A,0x03,0x03,0x03,0xDD,0x77,0x0A,0xDD,0x77,0xF9,0x11,0xAE,0xC7
+038++ 87E9 CB09960A030303DD770ADD77F911AEC7
+039++ 87F9                     defb    0xDD,0x7E,0x06,0xDD,0x77,0x07,0x87,0x6F,0x26,0x00,0x19,0x7E,0x23,0x66,0x6F,0xE5
+039++ 87F9 DD7E06DD7707876F2600197E23666FE5
+040++ 8809                     defb    0x3E,0x3E,0xDD,0x77,0x06,0x87,0x6F,0x26,0x00,0x19,0x5E,0x23,0x56,0xE1,0xED,0x52
+040++ 8809 3E3EDD7706876F2600195E2356E1ED52
+041++ 8819                     defb    0xDD,0x75,0x0D,0xDD,0x74,0x0E,0xDD,0x5E,0xFA,0xDD,0x56,0xFB,0x3E,0x3E,0xFE,0x06
+041++ 8819 DD750DDD740EDD5EFADD56FB3E3EFE06
+042++ 8829                     defb    0x38,0x09,0x11,0x11,0x11,0xDD,0x73,0xFA,0xDD,0x72,0xFB,0x0A,0x03,0x08,0x0A,0x03
+042++ 8829 3809111111DD73FADD72FB0A03080A03
+043++ 8839                     defb    0xA7,0x28,0x01,0xEB,0xED,0x52,0xF2,0xAE,0xC2,0x2F,0x08,0xED,0x44,0x08,0xDD,0x77
+043++ 8839 A72801EBED52F2AEC22F08ED4408DD77
+044++ 8849                     defb    0x0C,0x08,0xDD,0x77,0x0B,0xDD,0x36,0xFE,0x00,0xC9,0xDD,0xCB,0x09,0xD6,0x0A,0x03
+044++ 8849 0C08DD770BDD36FE00C9DDCB09D60A03
+045++ 8859                     defb    0xDD,0x77,0x0A,0xA7,0x20,0x07,0x3A,0x8D,0xC2,0xFE,0x07,0x9F,0x3C,0xDD,0x77,0xF9
+045++ 8859 DD770AA720073A8DC2FE079F3CDD77F9
+046++ 8869                     defb    0x0A,0x03,0x08,0x0A,0x03,0x18,0xD7,0x0A,0x03,0xDD,0x77,0xF5,0xC9,0x0A,0x03,0xDD
+046++ 8869 0A03080A0318D70A03DD77F5C90A03DD
+047++ 8879                     defb    0x77,0xF4,0xC9,0x0A,0x03,0xDD,0x77,0xFF,0xDD,0x77,0xFE,0x0A,0x03,0xDD,0x77,0x00
+047++ 8879 77F4C90A03DD77FFDD77FE0A03DD7700
+048++ 8889                     defb    0xAF,0xDD,0x77,0xF9,0xDD,0x77,0xFA,0xDD,0x77,0xFB,0xC9,0x0A,0x03,0x32,0xA1,0xC5
+048++ 8889 AFDD77F9DD77FADD77FBC90A0332A1C5
+049++ 8899                     defb    0x32,0xAB,0xC6,0x0A,0x03,0x6F,0x0A,0x03,0x67,0x22,0xA4,0xC5,0xC9,0x0A,0x03,0x32
+049++ 8899 32ABC60A036F0A036722A4C5C90A0332
+050++ 88A9                     defb    0x45,0xC5,0xC9,0xDD,0x73,0x08,0x32,0xBB,0xC6,0x0A,0x03,0x67,0x0A,0x03,0x6F,0x22
+050++ 88A9 45C5C9DD730832BBC60A03670A036F22
+051++ 88B9                     defb    0xBC,0xC6,0xAF,0xDD,0x77,0xF4,0x32,0xAB,0xC6,0x67,0x6F,0x22,0xA9,0xC6,0xC9,0x87
+051++ 88B9 BCC6AFDD77F432ABC6676F22A9C6C987
+052++ 88C9                     defb    0x5F,0x16,0x00,0xDD,0x72,0xF4,0x21,0x21,0x21,0x19,0x5E,0x23,0x56,0x21,0x21,0x21
+052++ 88C9 5F1600DD72F4212121195E2356212121
+053++ 88D9                     defb    0x19,0xDD,0x75,0x01,0xDD,0x74,0x02,0xC9,0x2E,0xC3,0xBA,0xC2,0x4F,0xC2,0xD7,0xC2
+053++ 88D9 19DD7501DD7402C92EC3BAC24FC2D7C2
+054++ 88E9                     defb    0xDD,0xC2,0xE3,0xC2,0x2E,0xC3,0x2E,0xC3,0xFB,0xC2,0x0D,0xC3,0x2E,0xC3,0x2E,0xC3
+054++ 88E9 DDC2E3C22EC32EC3FBC20DC32EC32EC3
+055++ 88F9                     defb    0x2E,0xC3,0x2E,0xC3,0x2E,0xC3,0x2E,0xC3,0xAF,0x32,0xB8,0xC6,0xDD,0xCB,0x15,0x46
+055++ 88F9 2EC32EC32EC32EC3AF32B8C6DDCB1546
+056++ 8909                     defb    0xE5,0xCA,0x96,0xC4,0xED,0x73,0xE1,0xC3,0xDD,0x6E,0x0D,0xDD,0x66,0x0E,0xF9,0xD1
+056++ 8909 E5CA96C4ED73E1C3DD6E0DDD660EF9D1
+057++ 8919                     defb    0x67,0xDD,0x7E,0x00,0x6F,0x39,0x3C,0xBA,0x38,0x01,0x7B,0xDD,0x77,0x00,0xDD,0x7E
+057++ 8919 67DD7E006F393CBA38017BDD7700DD7E
+058++ 8929                     defb    0x12,0x86,0xF2,0x96,0xC3,0xAF,0xFE,0x60,0x38,0x02,0x3E,0x5F,0x87,0x08,0xDD,0x6E
+058++ 8929 1286F296C3AFFE6038023E5F8708DD6E
+059++ 8939                     defb    0x0F,0xDD,0x66,0x10,0xF9,0xD1,0x26,0x00,0xDD,0x7E,0x01,0x47,0x87,0x87,0x6F,0x39
+059++ 8939 0FDD6610F9D12600DD7E014787876F39
+060++ 8949                     defb    0xF9,0x78,0x3C,0xBA,0x38,0x01,0x7B,0xDD,0x77,0x01,0xC1,0xE1,0xDD,0x5E,0x08,0xDD
+060++ 8949 F9783CBA38017BDD7701C1E1DD5E08DD
+061++ 8959                     defb    0x56,0x09,0x19,0xCB,0x70,0x28,0x06,0xDD,0x75,0x08,0xDD,0x74,0x09,0xEB,0x08,0x6F
+061++ 8959 560919CB702806DD7508DD7409EB086F
+062++ 8969                     defb    0x26,0x00,0x31,0xAE,0xC7,0x39,0xF9,0xE1,0x19,0xDD,0x5E,0x06,0xDD,0x56,0x07,0x19
+062++ 8969 260031AEC739F9E119DD5E06DD560719
+063++ 8979                     defb    0x31,0x31,0x31,0xE3,0xAF,0xDD,0xB6,0x05,0x28,0x3E,0xDD,0x35,0x05,0x20,0x39,0xDD
+063++ 8979 313131E3AFDDB605283EDD35052039DD
+064++ 8989                     defb    0x7E,0x16,0xDD,0x77,0x05,0xDD,0x6E,0x17,0xDD,0x66,0x18,0x7C,0x19,0xDD,0x75,0x06
+064++ 8989 7E16DD7705DD6E17DD66187C19DD7506
+065++ 8999                     defb    0xDD,0x74,0x07,0xDD,0xCB,0x15,0x56,0x20,0x1F,0xDD,0x5E,0x19,0xDD,0x56,0x1A,0xA7
+065++ 8999 DD7407DDCB1556201FDD5E19DD561AA7
+066++ 89A9                     defb    0x28,0x01,0xEB,0xED,0x52,0xFA,0x28,0xC4,0xDD,0x7E,0x13,0xDD,0x77,0x12,0xAF,0xDD
+066++ 89A9 2801EBED52FA28C4DD7E13DD7712AFDD
+067++ 89B9                     defb    0x77,0x05,0xDD,0x77,0x06,0xDD,0x77,0x07,0xDD,0x7E,0x02,0xCB,0x79,0x28,0x13,0xCB
+067++ 89B9 7705DD7706DD7707DD7E02CB792813CB
+068++ 89C9                     defb    0x71,0x28,0x07,0xFE,0x0F,0x28,0x0B,0x3C,0x18,0x05,0xFE,0xF1,0x28,0x04,0x3D,0xDD
+068++ 89C9 712807FE0F280B3C1805FEF128043DDD
+069++ 89D9                     defb    0x77,0x02,0x6F,0x78,0xE6,0x0F,0x85,0xF2,0x4B,0xC4,0xAF,0xFE,0x10,0x38,0x02,0x3E
+069++ 89D9 77026F78E60F85F24BC4AFFE1038023E
+070++ 89E9                     defb    0x0F,0xDD,0xB6,0x1C,0x6F,0x26,0x00,0x11,0xAE,0xC6,0x19,0x7E,0xCB,0x41,0x20,0x03
+070++ 89E9 0FDDB61C6F260011AEC6197ECB412003
+071++ 89F9                     defb    0xDD,0xB6,0x14,0x32,0xB8,0xC6,0xCB,0x78,0x79,0x28,0x19,0x17,0x17,0xCB,0x2F,0xCB
+071++ 89F9 DDB61432B8C6CB787928191717CB2FCB
+072++ 8A09                     defb    0x2F,0xCB,0x2F,0xDD,0x86,0x04,0xCB,0x68,0x28,0x03,0xDD,0x77,0x04,0x21,0x85,0xC5
+072++ 8A09 2FCB2FDD8604CB682803DD77042185C5
+073++ 8A19                     defb    0x86,0x77,0x18,0x0E,0x1F,0xDD,0x86,0x03,0x32,0xAD,0xC6,0xCB,0x68,0x28,0x03,0xDD
+073++ 8A19 8677180E1FDD860332ADC6CB682803DD
+074++ 8A29                     defb    0x77,0x03,0x78,0x1F,0xE6,0x48,0x21,0xB5,0xC6,0xB6,0x0F,0x77,0xE1,0xAF,0xDD,0xB6
+074++ 8A29 7703781FE64821B5C6B60F77E1AFDDB6
+075++ 8A39                     defb    0x0A,0xC8,0xDD,0x35,0x0A,0xC0,0xDD,0xAE,0x15,0xDD,0x77,0x15,0x1F,0xDD,0x7E,0x0B
+075++ 8A39 0AC8DD350AC0DDAE15DD77151FDD7E0B
+076++ 8A49                     defb    0x38,0x03,0xDD,0x7E,0x0C,0xDD,0x77,0x0A,0xC9,0xAF,0x32,0x85,0xC5,0x32,0xB5,0xC6
+076++ 8A49 3803DD7E0CDD770AC9AF3285C532B5C6
+077++ 8A59                     defb    0x3D,0x32,0xBB,0xC6,0x21,0xA8,0xC6,0x35,0x20,0x7F,0x21,0x6C,0xC6,0x35,0x20,0x4C
+077++ 8A59 3D32BBC621A8C635207F216CC635204C
+078++ 8A69                     defb    0x01,0x01,0x01,0x0A,0xA7,0x20,0x3A,0x57,0x32,0xAC,0xC6,0x2A,0x0B,0xC0,0x23,0x7E
+078++ 8A69 0101010AA7203A5732ACC62A0BC0237E
+079++ 8A79                     defb    0x3C,0x20,0x08,0xCD,0x22,0xC0,0x21,0x21,0x21,0x7E,0x3C,0x22,0x0B,0xC0,0x3D,0x87
+079++ 8A79 3C2008CD22C02121217E3C220BC03D87
+080++ 8A89                     defb    0x5F,0xCB,0x12,0x21,0x21,0x21,0x19,0xED,0x5B,0xA8,0xC1,0xED,0x73,0x0F,0xC5,0xF9
+080++ 8A89 5FCB1221212119ED5BA8C1ED730FC5F9
+081++ 8A99                     defb    0xE1,0x19,0x44,0x4D,0xE1,0x19,0x22,0x27,0xC5,0xE1,0x19,0x22,0x3B,0xC5,0x31,0x31
+081++ 8A99 E119444DE1192227C5E119223BC53131
+082++ 8AA9                     defb    0x31,0xDD,0x21,0x5D,0xC6,0xCD,0xE5,0xC1,0xED,0x43,0xD1,0xC4,0x21,0x89,0xC6,0x35
+082++ 8AA9 31DD215DC6CDE5C1ED43D1C42189C635
+083++ 8AB9                     defb    0x20,0x0E,0xDD,0x21,0x7A,0xC6,0x01,0x01,0x01,0xCD,0xE5,0xC1,0xED,0x43,0x27,0xC5
+083++ 8AB9 200EDD217AC6010101CDE5C1ED4327C5
+084++ 8AC9                     defb    0x21,0xA6,0xC6,0x35,0x20,0x0E,0xDD,0x21,0x97,0xC6,0x01,0x01,0x01,0xCD,0xE5,0xC1
+084++ 8AC9 21A6C635200EDD2197C6010101CDE5C1
+085++ 8AD9                     defb    0xED,0x43,0x3B,0xC5,0x3E,0x3E,0x32,0xA8,0xC6,0xDD,0x21,0x51,0xC6,0x2A,0xAE,0xC6
+085++ 8AD9 ED433BC53E3E32A8C6DD2151C62AAEC6
+086++ 8AE9                     defb    0xCD,0x68,0xC3,0x22,0xAE,0xC6,0x3A,0xB8,0xC6,0x32,0xB6,0xC6,0xDD,0x21,0x6E,0xC6
+086++ 8AE9 CD68C322AEC63AB8C632B6C6DD216EC6
+087++ 8AF9                     defb    0x2A,0xB0,0xC6,0xCD,0x68,0xC3,0x22,0xB0,0xC6,0x3A,0xB8,0xC6,0x32,0xB7,0xC6,0xDD
+087++ 8AF9 2AB0C6CD68C322B0C63AB8C632B7C6DD
+088++ 8B09                     defb    0x21,0x8B,0xC6,0x2A,0xB2,0xC6,0xCD,0x68,0xC3,0x22,0xB2,0xC6,0x2A,0xAC,0xC6,0x7C
+088++ 8B09 218BC62AB2C6CD68C322B2C62AACC67C
+089++ 8B19                     defb    0x85,0x32,0xB4,0xC6,0x3E,0x3E,0x5F,0x87,0x9F,0x57,0x2A,0xBC,0xC6,0x19,0xED,0x5B
+089++ 8B19 8532B4C63E3E5F879F572ABCC619ED5B
+090++ 8B29                     defb    0xA9,0xC6,0x19,0x22,0xB9,0xC6,0xAF,0x21,0xAB,0xC6,0xB6,0x28,0x0E,0x35,0x20,0x0A
+090++ 8B29 A9C61922B9C6AF21ABC6B6280E35200A
+091++ 8B39                     defb    0x3E,0x3E,0x77,0x21,0x21,0x21,0x19,0x22,0xA9,0xC6,0xAF,0x11,0xBF,0xFF,0x01,0xFD
+091++ 8B39 3E3E772121211922A9C6AF11BFFF01FD
+092++ 8B49                     defb    0xFF,0x21,0xAE,0xC6,0xED,0x79,0x43,0xED,0xA3,0x42,0x3C,0xFE,0x0D,0x20,0xF5,0xED
+092++ 8B49 FF21AEC6ED7943EDA3423CFE0D20F5ED
+093++ 8B59                     defb    0x79,0x7E,0xA7,0xF8,0x43,0xED,0x79,0xC9,0x64,0x2A,0x65,0x00,0x01,0x0C,0x01,0x0C
+093++ 8B59 797EA7F843ED79C9642A6500010C010C
+094++ 8B69                     defb    0x94,0x35,0x30,0x0E,0x60,0x20,0x60,0x21,0x01,0x05,0x09,0x0B,0x0D,0x0F,0x13,0x15
+094++ 8B69 9435300E602060210105090B0D0F1315
+095++ 8B79                     defb    0x19,0x25,0x3D,0x00,0x5D,0x00,0x31,0x37,0x4D,0x53,0x5F,0x71,0x82,0x8C,0x9C,0x9E
+095++ 8B79 19253D005D0031374D535F71828C9C9E
+096++ 8B89                     defb    0xA0,0xA6,0xA8,0xAA,0xAC,0xAE,0xAE,0x00,0x57,0x1F,0x23,0x25,0x29,0x2D,0x2F,0x33
+096++ 8B89 A0A6A8AAACAEAE00571F2325292D2F33
+097++ 8B99                     defb    0xBF,0x00,0x1D,0x21,0x23,0x27,0x2B,0x2D,0x31,0x55,0xBD,0xBF,0x00,0x1B,0x21,0x25
+097++ 8B99 BF001D2123272B2D3155BDBF001B2125
+098++ 8BA9                     defb    0x29,0x2B,0x3B,0x4D,0x5F,0xBB,0xBD,0xBF,0x00,0x01,0x00,0x90,0x0D,0xD8,0x69,0x70
+098++ 8BA9 292B3B4D5FBBBDBF000100900DD86970
+099++ 8BB9                     defb    0x76,0x7D,0x85,0x8D,0x95,0x9D,0xA8,0xB1,0xBB,0x0C,0xDA,0x62,0x68,0x6D,0x75,0x7B
+099++ 8BB9 767D858D959DA8B1BB0CDA62686D757B
+100++ 8BC9                     defb    0x83,0x8A,0x92,0x9C,0xA4,0xAF,0xB8,0x0E,0x08,0x6A,0x72,0x78,0x7E,0x86,0x90,0x96
+100++ 8BC9 838A929CA4AFB80E086A72787E869096
+101++ 8BD9                     defb    0xA0,0xAA,0xB4,0xBE,0x0F,0xC0,0x78,0x88,0x80,0x90,0x98,0xA0,0xB0,0xA8,0xE0,0xB0
+101++ 8BD9 A0AAB4BE0FC07888809098A0B0A8E0B0
+102++ 8BE9 E8                  defb    0xE8
+667+  8BEA                     ; listing on
+668+  8BEA             sz_vtpl: equ     $-vtpl
+669+  8BEA             
+670+  8BEA             ;------------------------------
+671+  8BEA                     include "utils.asm"
+001++ 8BEA             ;-----------------------------------------------
+002++ 8BEA             ;  если нажат <CTRL+Z>
+003++ 8BEA             ;	C=1, A=0FFh
+004++ 8BEA             tst_brk: 
+005++ 8BEA 0E 31               ld	c,Dss.ScanKey
+006++ 8BEC D7          	rst	#10
+007++ 8BED 28 0F               jr      z,.no_keys      ;Не нажата ни одна кнопка
+008++ 8BEF CB 68               BIT	5,B             ;При нажатом Ctrl
+009++ 8BF1 28 0B               jr      z,.no_keys
+010++ 8BF3 7A                  ld      a,d
+011++ 8BF4 E6 7F               and     #7f
+012++ 8BF6 FE 2A               cp      #2a             ;Ctrl+Z
+013++ 8BF8 20 04               jr      nz,.no_keys
+014++ 8BFA AF                  xor	a
+015++ 8BFB 3D          	dec	a		;Z=0, CY=0
+016++ 8BFC 37                  scf
+017++ 8BFD C9                  ret
+018++ 8BFE             .no_keys: 
+019++ 8BFE A7                  and     a
+020++ 8BFF C9                  ret
+021++ 8C00             
+022++ 8C00             ;Процессор работает на частоте 21мгц (21000000Гц). Однако из-за задержек
+023++ 8C00             ;в работе с памятью итоговая частота будет в районе 12.3мгц (252896 тактов в инте).
+024++ 8C00             __CPU_CLOCK		equ 13816406
+025++ 8C00             ;__CPU_CLOCK		equ 21000000
+026++ 8C00             
+027++ 8C00             ;hl = delay in ms
+028++ 8C00 5D          __delay: 	ld e,l
+029++ 8C01 54          		ld d,h
+030++ 8C02 1B          .ms_loop: 	dec de
+031++ 8C03 7A          		ld a,d
+032++ 8C04 B3          		or e
+033++ 8C05 28 06       		jr z,.last_ms
+034++ 8C07             
+035++ 8C07 21 CD 35    		ld hl,(__CPU_CLOCK / 1000) - 43
+036++ 8C0A CD 10 8C    		call .delay_tstate
+037++ 8C0D             
+038++ 8C0D             ; we will be exact
+039++ 8C0D 21 C2 35    .last_ms: 	ld hl,+(__CPU_CLOCK / 1000) - 54
+040++ 8C10             
+041++ 8C10 01 73 FF    .delay_tstate: 	ld bc,-141
+042++ 8C13 09          		add hl,bc
+043++ 8C14 01 E9 FF    		ld bc,-23
+044++ 8C17 09          .loop: 		add hl,bc
+045++ 8C18 38 FD       		jr c,.loop
+046++ 8C1A 7D          		ld a,l
+047++ 8C1B C6 0F       		add a,15
+048++ 8C1D 30 06       		jr nc,.g0
+049++ 8C1F FE 08       		cp 8
+050++ 8C21 38 03       		jr c,.g1
+051++ 8C23 F6 00       		or 0
+052++ 8C25 23          .g0: 		inc hl
+053++ 8C26 1F          .g1: 		rra
+054++ 8C27 38 01       		jr c,.b0
+055++ 8C29             
+056++ 8C29 00          		nop
+057++ 8C2A             
+058++ 8C2A 1F          .b0: 		rra
+059++ 8C2B 30 02       		jr nc,.b1
+060++ 8C2D F6 00       		or 0
+061++ 8C2F 1F          .b1: 		rra
+062++ 8C30 D0          		ret nc
+063++ 8C31 C9          		ret
+064++ 8C32             
+065++ 8C32             ;=========================================
+066++ 8C32             scan_key: 
+067++ 8C32 0E 31       	ld	c,Dss.ScanKey
+068++ 8C34 D7          	rst	10h
+069++ 8C35 C9          	ret
+070++ 8C36             ;=========================================
+071++ 8C36 E5          prn_a: 	push	hl
+072++ 8C37 0E 5B       	ld	c,Dss.PutChar
+073++ 8C39             	; cp	TAB		; TAB
+074++ 8C39             	; jr	nz,no_tab
+075++ 8C39             	; ld	a,' '		;заменить на пробел
+076++ 8C39 D7          no_tab: 	RST	10h
+077++ 8C3A E1          	pop	hl
+078++ 8C3B C9          	RET
+079++ 8C3C             ;=========================================
+080++ 8C3C 0E 5C       prn_tx: 	ld	c,Dss.PChars
+081++ 8C3E D7          	rst	10h
+082++ 8C3F C9          	ret
+083++ 8C40             ;-----------------------------------------
+084++ 8C40             clear_screen: 
+085++ 8C40 11 00 00    	ld	de,0
+086++ 8C43 AF          	xor	a
+087++ 8C44 D5          	push	de
+088++ 8C45 21 50 20    	ld	hl,2050h
+089++ 8C48 06 07       	ld	b,7
+090++ 8C4A 0E 56       	ld	c,Dss.Clear
+091++ 8C4C D7          	rst	10h
+092++ 8C4D D1          	pop	de
+093++ 8C4E 0E 52       	ld	c,Dss.Locate
+094++ 8C50 D7          	rst	10h
+095++ 8C51 C9          	ret
+672+  8C52                     include "isa.asm"        
+001++ 8C52             ;If you want to interaction with ISA devices, you have to make following steps:
+002++ 8C52             ;1) send 10h value to port 1FFDh(system port);
+003++ 8C52             ;2) send control byte to port 0E2h(third memory window port);
+004++ 8C52             ;control byte:
+005++ 8C52             ;D7...should be 1
+006++ 8C52             ;D6...should be 1
+007++ 8C52             ;D5...should be 0
+008++ 8C52             ;D4...should be 1
+009++ 8C52             ;D3...should be 0
+010++ 8C52             ;D2...specify number of ISA slot
+011++ 8C52             ;D1...specify access mode (0 - ISA memory, 1 - ISA ports)
+012++ 8C52             ;D0...should be 0
+013++ 8C52             
+014++ 8C52             ;The read/write signals are forming from read/write signals memory range 0C000h-0FFFFh.
+015++ 8C52             ;And the address lines A13...A0 has taken from processor data-BUS.
+016++ 8C52             ;The other ISA-signals such as RESET, AEN, A19...A14 can be set in port 9FBDh. And default value is 00h.
+017++ 8C52             ;port 9FBDh:
+018++ 8C52             ;D7...RESET
+019++ 8C52             ;D6...AEN
+020++ 8C52             ;D5...A19
+021++ 8C52             ;D4...A18
+022++ 8C52             ;D3...A17
+023++ 8C52             ;D2...A16
+024++ 8C52             ;D1...A15
+025++ 8C52             ;D0...A14
+026++ 8C52             
+027++ 8C52             isa_init: 
+028++ 8C52 CD 59 8C            call reset_isa
+029++ 8C55 CD 6D 8C            call open_isa_ports
+030++ 8C58 C9                  ret
+031++ 8C59             
+032++ 8C59             ; reset ISA device
+033++ 8C59             reset_isa: 
+034++ 8C59 01 BD 9F            ld bc,Port.ISA
+035++ 8C5C 3E C0               ld a,0xc0
+036++ 8C5E ED 79               out (c),a
+037++ 8C60 C5                  push bc
+038++ 8C61 21 14 00            ld hl,20
+039++ 8C64 CD 00 8C            call __delay
+040++ 8C67 C1                  pop bc
+041++ 8C68 3E 00               ld a,0
+042++ 8C6A ED 79               out (c),a
+043++ 8C6C C9                  ret
+044++ 8C6D             
+045++ 8C6D             open_isa_ports: 
+046++ 8C6D F5                  push af
+047++ 8C6E C5                  push bc
+048++ 8C6F DB E2               in a,(EmmWin.P3)
+049++ 8C71 32 9A 8C            ld (save_mmu3),a
+050++ 8C74 01 FD 1F            ld bc,Port.System
+051++ 8C77 3E 11               ld a,0x11
+052++ 8C79 ED 79               out (c),a
+053++ 8C7B 3E D4               ld a,0xd4
+054++ 8C7D D3 E2               out (EmmWin.P3),a
+055++ 8C7F 01 BD 9F            ld bc,Port.ISA
+056++ 8C82 3E 00               ld a,0
+057++ 8C84 ED 79               out (c),a
+058++ 8C86 C1                  pop bc
+059++ 8C87 F1                  pop af
+060++ 8C88 C9                  ret
+061++ 8C89             
+062++ 8C89             
+063++ 8C89             close_isa_ports: 
+064++ 8C89 F5                  push af
+065++ 8C8A C5                  push bc
+066++ 8C8B 01 FD 1F            ld bc,Port.System
+067++ 8C8E 3E 01               ld a,1
+068++ 8C90 ED 79               out (c),a
+069++ 8C92 3A 9A 8C            ld a,(save_mmu3)
+070++ 8C95 D3 E2               out (EmmWin.P3),a
+071++ 8C97 C1                  pop bc
+072++ 8C98 F1                  pop af
+073++ 8C99 C9                  ret
+074++ 8C9A 00          save_mmu3       db 0
+673+  8C9B             ;------------------------------
+674+  8C9B             tabl_ptrurl: 
+675+  8C9B E2 90 78 90         defw    str_rqsz1,str_uri1
+676+  8C9F 3F 91 E6 90         defw    str_rqsz2,str_uri2
+677+  8CA3 AC 91 43 91         defw    str_rqsz3,str_uri3
+678+  8CA7 03 92 B0 91         defw    str_rqsz4,str_uri4
+679+  8CAB 60 92 07 92         defw    str_rqsz5,str_uri5
+680+  8CAF B8 92 64 92         defw    str_rqsz6,str_uri6
+681+  8CB3 1B 93 BC 92         defw    str_rqsz7,str_uri7
+682+  8CB7 74 93 1F 93         defw    str_rqsz8,str_uri8
+683+  8CBB CB 93 78 93         defw    str_rqsz9,str_uri9
+684+  8CBF             ;------------------------------
+685+  8CBF             msgff_timeout:   defb    19,1,13,16,2,"- Timeout! -",16,5,13,0xff
+685+  8CBF 13010D10022D2054696D656F757421202D10050DFF
+686+  8CD4             msgff_error:     defb    19,1,13,16,2,"- Error! -",16,5,13,0xff
+686+  8CD4 13010D10022D204572726F7221202D10050DFF
+687+  8CE7             
+688+  8CE7             msg_no_comport:  defb    "COM-port is not found!",13,10,0
+688+  8CE7 434F4D2D706F7274206973206E6F7420666F756E64210D0A00
+689+  8D00             
+690+  8D00             msg_baudmenu:    defb    "Select baudrate:",13,10
+690+  8D00 53656C6563742062617564726174653A0D0A
+691+  8D12                             defb    "1.115200",13,10
+691+  8D12 312E3131353230300D0A
+692+  8D1C                             defb    "2. 57600",13,10
+692+  8D1C 322E2035373630300D0A
+693+  8D26                             defb    "3. 38400",13,10
+693+  8D26 332E2033383430300D0A
+694+  8D30                             defb    "4. 28800",13,10
+694+  8D30 342E2032383830300D0A
+695+  8D3A                             defb    "5. 19200",13,10
+695+  8D3A 352E2031393230300D0A
+696+  8D44                             defb    "6. 14400",13,10
+696+  8D44 362E2031343430300D0A
+697+  8D4E                             defb    "7.  9600",13,10,0
+697+  8D4E 372E2020393630300D0A00
+698+  8D59             msg_req_vers:    defb    "Firmware version...",13,10,0
+698+  8D59 4669726D776172652076657273696F6E2E2E2E0D0A00
+699+  8D6F             msg_press_key:   defb    "Press a key",13,10,0
+699+  8D6F 50726573732061206B65790D0A00
+700+  8D7D             msg_chg_baud:    defb    "Change baudrate...",13,10,0
+700+  8D7D 4368616E67652062617564726174652E2E2E0D0A00
+701+  8D92             msg_ap_list:     defb    "AccessPoint list...",13,10,0
+701+  8D92 416363657373506F696E74206C6973742E2E2E0D0A00
+702+  8DA8             msg_repeat:      defb    "R - repeat, else continue",13,10,0
+702+  8DA8 52202D207265706561742C20656C736520636F6E74696E75650D0A00
+703+  8DC4             msg_ap_conn:     defb    "Connect to AccessPoint...",13,10,0
+703+  8DC4 436F6E6E65637420746F20416363657373506F696E742E2E2E0D0A00
+704+  8DE0             msg_ipcfg:       defb    "IP config info...",13,10,0
+704+  8DE0 495020636F6E66696720696E666F2E2E2E0D0A00
+705+  8DF4             msg_ping:        defb    "Ping...",13,10,0
+705+  8DF4 50696E672E2E2E0D0A00
+706+  8DFE             msg_menuload:    defb    "Now, we can try to load some",13,10
+706+  8DFE 4E6F772C2077652063616E2074727920746F206C6F616420736F6D650D0A
+707+  8E1C                             defb    "pre-defined resources",13,10
+707+  8E1C 7072652D646566696E6564207265736F75726365730D0A
+708+  8E33                             defb    "from the Internet.",13,10
+708+  8E33 66726F6D2074686520496E7465726E65742E0D0A
+709+  8E47                             defb    "1. scr #1",13,10
+709+  8E47 312E207363722023310D0A
+710+  8E52                             defb    "2. scr #2",13,10
+710+  8E52 322E207363722023320D0A
+711+  8E5D                             defb    "3. scr #3",13,10
+711+  8E5D 332E207363722023330D0A
+712+  8E68                             defb    "4. gigascr #1",13,10
+712+  8E68 342E20676967617363722023310D0A
+713+  8E77                             defb    "5. gigascr #2",13,10
+713+  8E77 352E20676967617363722023320D0A
+714+  8E86                             defb    "6. gigascr #3",13,10
+714+  8E86 362E20676967617363722023330D0A
+715+  8E95                             defb    "7. pt3 #1",13,10
+715+  8E95 372E207074332023310D0A
+716+  8EA0                             defb    "8. pt3 #2",13,10
+716+  8EA0 382E207074332023320D0A
+717+  8EAB                             defb    "9. pt3 #3",13,10,0
+717+  8EAB 392E207074332023330D0A00
+718+  8EB7             msg_open_tcp:    defb    "Open TCP connection...",13,10,0
+718+  8EB7 4F70656E2054435020636F6E6E656374696F6E2E2E2E0D0A00
+719+  8ED0             msg_musply:      defb    13,10,"PT3-module playing"
+719+  8ED0 0D0A5054332D6D6F64756C6520706C6179696E67
+720+  8EE4 2E 2E 2E 00 msg_skip:        defb    "...",0
+721+  8EE8             
+722+  8EE8 41 54 45 30 cmd_ate0:        defb    "ATE0"
+723+  8EEC 0D 0A 00    str_crlf:        defb    13,10,0
+724+  8EEF             cmd_gmr:         defb    "AT+GMR",13,10,0
+724+  8EEF 41542B474D520D0A00
+725+  8EF8             cmd_uart_9600:   defb    "AT+UART_CUR=9600,8,1,0,0",13,10,0
+725+  8EF8 41542B554152545F4355523D393630302C382C312C302C300D0A00
+726+  8F13             cmd_cwmode:      defb    "AT+CWMODE_DEF=1",13,10,0
+726+  8F13 41542B43574D4F44455F4445463D310D0A00
+727+  8F25             cmd_cwautoconn:  defb    "AT+CWAUTOCONN=0",13,10,0
+727+  8F25 41542B43574155544F434F4E4E3D300D0A00
+728+  8F37             cmd_cwqap:       defb    "AT+CWQAP",13,10,0
+728+  8F37 41542B43575141500D0A00
+729+  8F42             cmd_cwlap:       defb    "AT+CWLAP",13,10,0
+729+  8F42 41542B43574C41500D0A00
+730+  8F4D             cmd_cwjap:       defb    "AT+CWJAP_CUR=",0x22
+730+  8F4D 41542B43574A41505F4355523D22
+731+  8F5B                             defb    "wifitest123"                           ; SSID
+731+  8F5B 7769666974657374313233
+732+  8F66 22 2C 22                    defb    0x22,0x2c,0x22
+733+  8F69                             defb    "ZXSpectrumForeverHelloEverybody321"    ; password
+733+  8F69 5A58537065637472756D466F726576657248656C6C6F4576657279626F647933
+733+  8F89 3231
+734+  8F8B 22 0D 0A 00                 defb    0x22,13,10,0
+735+  8F8F             cmd_cipsta:      defb    "AT+CIPSTA?",13,10,0
+735+  8F8F 41542B4349505354413F0D0A00
+736+  8F9C             cmd_ping_g:      defb    "AT+PING=",0x22,"google.com",0x22,13,10,0
+736+  8F9C 41542B50494E473D22676F6F676C652E636F6D220D0A00
+737+  8FB3             cmd_ping_y:      defb    "AT+PING=",0x22,"yandex.ru",0x22,13,10,0
+737+  8FB3 41542B50494E473D2279616E6465782E7275220D0A00
+738+  8FC9             cmd_conn2site:   defb    "AT+CIPSTART=",0x22,"TCP",0x22,",",0x22
+738+  8FC9 41542B43495053544152543D22544350222C22
+739+  8FDC                             defb    "zxart.ee"                              ; site
+739+  8FDC 7A786172742E6565
+740+  8FE4                             defb    0x22,",80",13,10,0
+740+  8FE4 222C38300D0A00
+741+  8FEB             cmd_cipsend:     defb    "AT+CIPSEND=",0
+741+  8FEB 41542B43495053454E443D00
+742+  8FF7             
+743+  8FF7 4745542000  str_get1:        defb    "GET ",0 ;size=4
+744+  8FFC             str_get2:        defb    " HTTP/1.1",13,10 ;size=123
+744+  8FFC 20485454502F312E310D0A
+745+  9007                             defb    "Host: zxart.ee",13,10
+745+  9007 486F73743A207A786172742E65650D0A
+746+  9017                             defb    "User-Agent: ESP8266-probe1 (ZX Spectrum; CPU Z80; RAM 128Kb)",13,10    ; show off ;)
+746+  9017 557365722D4167656E743A20455350383236362D70726F62653120285A582053
+746+  9037 7065637472756D3B20435055205A38303B2052414D203132384B62290D0A
+747+  9055                             defb    "Accept: */*",13,10
+747+  9055 4163636570743A202A2F2A0D0A
+748+  9062                             defb    "Connection: close",13,10,13,10,0
+748+  9062 436F6E6E656374696F6E3A20636C6F73650D0A0D0A00
+749+  9078             
+750+  9078             str_uri1:        defb    "/file/id:61049/filename:%D0%9A%D0%90%D0%A1%D0%B8%D0%BA_-_Banka_%282015%29_%283BM_OpenAir_2015%2C_3%29.scr",0 ;size=105
+750+  9078 2F66696C652F69643A36313034392F66696C656E616D653A2544302539412544
+750+  9098 302539302544302541312544302542382544302542415F2D5F42616E6B615F25
+750+  90B8 3238323031352532395F25323833424D5F4F70656E4169725F32303135253243
+750+  90D8 5F332532392E73637200
+751+  90E2 32 33 32 00 str_rqsz1:       defb    "232",0 ;232=4+105+123=get1+uri1+get2
+752+  90E6             
+753+  90E6             str_uri2:        defb    "/file/id:61053/filename:Buddy_-_Drunk_Kung-Fu_%282015%29_%283BM_OpenAir_2015%2C_5%29.scr",0 ;size=88
+753+  90E6 2F66696C652F69643A36313035332F66696C656E616D653A42756464795F2D5F
+753+  9106 4472756E6B5F4B756E672D46755F253238323031352532395F25323833424D5F
+753+  9126 4F70656E4169725F323031352532435F352532392E73637200
+754+  913F 32 31 35 00 str_rqsz2:       defb    "215",0 ;215=4+88+123=get1+uri2+get2
+755+  9143             
+756+  9143             str_uri3:        defb    "/file/id:61058/filename:brightentayle_-_The_Split_Foundations_%282015%29_%283BM_OpenAir_2015%2C_6%29.scr",0 ;size=104
+756+  9143 2F66696C652F69643A36313035382F66696C656E616D653A627269676874656E
+756+  9163 7461796C655F2D5F5468655F53706C69745F466F756E646174696F6E735F2532
+756+  9183 38323031352532395F25323833424D5F4F70656E4169725F323031352532435F
+756+  91A3 362532392E73637200
+757+  91AC 32 33 31 00 str_rqsz3:       defb    "231",0 ;231=4+104+123=get1+uri3+get2
+758+  91B0             
+759+  91B0             str_uri4:        defb    "/file/id:61060/filename:Tutty_-_Bat2Con_%282015%29_%283BM_OpenAir_2015%2C_1%29.img",0 ;size=82
+759+  91B0 2F66696C652F69643A36313036302F66696C656E616D653A54757474795F2D5F
+759+  91D0 42617432436F6E5F253238323031352532395F25323833424D5F4F70656E4169
+759+  91F0 725F323031352532435F312532392E696D6700
+760+  9203 32 30 39 00 str_rqsz4:       defb    "209",0 ;209=4+82+123=get1+uri4+get2
+761+  9207             
+762+  9207             str_uri5:        defb    "/file/id:61059/filename:Dimidrol_-_Amur_tiger_%282015%29_%283BM_OpenAir_2015%2C_2%29.img",0 ;size=88
+762+  9207 2F66696C652F69643A36313035392F66696C656E616D653A44696D6964726F6C
+762+  9227 5F2D5F416D75725F74696765725F253238323031352532395F25323833424D5F
+762+  9247 4F70656E4169725F323031352532435F322532392E696D6700
+763+  9260 32 31 35 00 str_rqsz5:       defb    "215",0 ;215=4+88+123=get1+uri5+get2
+764+  9264             
+765+  9264             str_uri6:        defb    "/file/id:61061/filename:prof4d_-_Fructus_%282015%29_%283BM_OpenAir_2015%2C_4%29.img",0 ;size=83
+765+  9264 2F66696C652F69643A36313036312F66696C656E616D653A70726F6634645F2D
+765+  9284 5F467275637475735F253238323031352532395F25323833424D5F4F70656E41
+765+  92A4 69725F323031352532435F342532392E696D6700
+766+  92B8 32 31 30 00 str_rqsz6:       defb    "210",0 ;210=4+83+123=get1+uri6+get2
+767+  92BC             
+768+  92BC             str_uri7:        defb    "/file/id:61065/filename:luchibobra_-_three_bad_mice_%282015%29_%283BM_OpenAir_2015%2C_1%29.pt3",0 ;size=94
+768+  92BC 2F66696C652F69643A36313036352F66696C656E616D653A6C75636869626F62
+768+  92DC 72615F2D5F74687265655F6261645F6D6963655F253238323031352532395F25
+768+  92FC 323833424D5F4F70656E4169725F323031352532435F312532392E70743300
+769+  931B 32 32 31 00 str_rqsz7:       defb    "221",0 ;221=4+94+123=get1+uri7+get2
+770+  931F             
+771+  931F             str_uri8:        defb    "/file/id:61067/filename:MmcM_-_summertime_%282015%29_%283BM_OpenAir_2015%2C_2%29.pt3",0 ;size=84
+771+  931F 2F66696C652F69643A36313036372F66696C656E616D653A4D6D634D5F2D5F73
+771+  933F 756D6D657274696D655F253238323031352532395F25323833424D5F4F70656E
+771+  935F 4169725F323031352532435F322532392E70743300
+772+  9374 32 31 31 00 str_rqsz8:       defb    "211",0 ;211=4+84+123=get1+uri8+get2
+773+  9378             
+774+  9378             str_uri9:        defb    "/file/id:61066/filename:wbc_-_isglass-3_%282015%29_%283BM_OpenAir_2015%2C_3%29.pt3",0 ;size=82
+774+  9378 2F66696C652F69643A36313036362F66696C656E616D653A7762635F2D5F6973
+774+  9398 676C6173732D335F253238323031352532395F25323833424D5F4F70656E4169
+774+  93B8 725F323031352532435F332532392E70743300
+775+  93CB 32 30 39 00 str_rqsz9:       defb    "209",0 ;209=4+82+123=get1+uri9+get2
+776+  93CF             
+777+  93CF 4F 4B 0D 00 str_ok:          defb    "OK",13,0
+778+  93D3             str_error:       defb    "ERROR",13,0
+778+  93D3 4552524F520D00
+779+  93DA             str_fail:        defb    "FAIL",13,0
+779+  93DA 4641494C0D00
+780+  93E0             str_send_ok:     defb    "SEND OK",13,0
+780+  93E0 53454E44204F4B0D00
+781+  93E9             str_ipd:         defb    13,10,"+IPD,",0
+781+  93E9 0D0A2B4950442C00
+782+  93F1             strbuff: 
+783+  93F1             ;------------------------------
+784+  93F1             end_addr: 
+003   93F1                     savebin "espprobe.exe",start_addr,end_addr-start_addr
+004   93F1             

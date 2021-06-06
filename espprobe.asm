@@ -39,7 +39,7 @@ begin:
         ; ld      (0x5c7b),hl
 
 p100:   ld      a,0x45
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,p100
         push    hl
 
@@ -169,7 +169,7 @@ p200:   ld      hl,bigbuff
         ldir
         call    clear_screen
         ld      a,0x45
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,msg_menuload
         call    zx_puts_safe
 p201:   call    zx_getkey
@@ -193,7 +193,7 @@ p210:
         ld      de,50
         call    set_timeout50
         ld      a,0x06
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,cmd_cipsend
         call    rs232_putstr
         ld      a,(resnum)
@@ -216,7 +216,7 @@ p210:
         call    x_err
         jp      p199
 p211:   ld      a,0x07
-        ld      (0x5c8f),a
+        ld      (color),a
 p212:   call    rs232_getchar
         jr      z,p212
         push    af
@@ -226,7 +226,7 @@ p212:   call    rs232_getchar
         jr      nz,p211
 
         ld      a,0x06
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,str_get1
         call    rs232_putstr
         ld      a,(resnum)
@@ -255,7 +255,7 @@ p220:   ld      de,1000
         call    set_timeout50
 
 p22a:   ld      a,0x07
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,strbuff
         ld      (hl),0
         call    rdipd
@@ -271,7 +271,7 @@ p221:   ld      de,str_ipd
         jp      p199
 p222:
         ld      a,0x45
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,msg_skip
         call    zx_puts_safe
         ld      hl,0
@@ -347,7 +347,7 @@ p242:   cp      10
         ld      bc,sz_vtpl
         ldir
         ld      a,0x45
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,msg_musply
         call    zx_puts_safe
         call    0xc000
@@ -400,11 +400,11 @@ send_cmd_wait_ok:
         call    set_timeout50
         call    rs232_reset_fifo
         ld      a,0x06
-        ld      (0x5c8f),a
+        ld      (color),a
         pop     hl
         call    rs232_putstr
         ld      a,0x45
-        ld      (0x5c8f),a
+        ld      (color),a
 wait_ok:ld      hl,strbuff
         call    rdstr
         ld      a,(strbuff)
@@ -413,11 +413,11 @@ wait_ok:ld      hl,strbuff
         inc     a
         ret
 _scwo1: ld      a,0x07
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      hl,strbuff
         call    zx_puts_safe
         ld      a,0x45
-        ld      (0x5c8f),a
+        ld      (color),a
         ld      de,str_ok
         call    ss_cmp
         ld      a,0x00
@@ -569,7 +569,7 @@ zx_putchar_safe:
         jr      c,_putc2
         cp      0x80
         jr      c,_putc1
-_putc2: ld      a,0x90
+_putc2: ld      a,'?'
 _putc1: push    hl
         call    prn_a
         pop     hl
@@ -605,6 +605,12 @@ zx_getkey:
         ret
 ;------------------------------
 set_timeout50:
+        ld      a,e
+        ld      (tmout),a
+        ld      c,Dss.SysTime
+        rst     0x10
+        ld      a,b
+        ld      (lastsec),a
         ret
         ; ld      hl,(0x5c78)
         ; add     hl,de
@@ -612,8 +618,22 @@ set_timeout50:
         ; ret
 ;------------------------------
 check_timeout:
-;todo: improve timeout
-        and     a
+        push    hl
+        push    de
+        push    bc
+        ld      c,Dss.SysTime
+        rst     0x10
+        ld      a,(lastsec)
+        cp      b
+        ld      a,b
+        pop     bc
+        pop     de
+        pop     hl
+        ret     z
+        ld      (lastsec),a
+        ld      a,(tmout)
+        dec     a
+        ld      (tmout),a
         ret
         ; push    hl
         ; push    de
@@ -626,9 +646,11 @@ check_timeout:
         ; ret
 ;------------------------------
 tmout:  defw    0
+lastsec: defb   0
 ptr:    defw    0
 packsz: defw    0
 resnum: defb    0
+color:  defb    7
 ;------------------------------
 udg:    defb    %00000000
         defb    %01010100
