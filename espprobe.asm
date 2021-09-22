@@ -9,7 +9,7 @@ base_com2_addr	equ 0x2f8
 base_com3_addr	equ 0x3e8
 base_com4_addr	equ 0x2e8
 
-SER_P	equ	isa_adr_base + base_com2_addr	;Port COM
+SER_P	equ	isa_adr_base + base_com1_addr	;Port COM
 
 LCR     equ     SER_P + 3
 FCR     equ     SER_P + 2
@@ -443,6 +443,10 @@ rdstr:  call    rs232_getchar
         jr      z,rdst3
         ld      (hl),a
         inc     hl
+        push hl
+        call tst_brk        
+        pop hl
+        jr c,rdst3
         jr      rdstr
 rdst2:  call    check_timeout
         jr      c,rdstr
@@ -499,7 +503,10 @@ rs232_init:
         ld      (hl),a
         ld      a,0x01
         ld      (hl),a
-_clfifo:ld      hl,LSR          ;LSR
+_clfifo:
+        ld a,2
+        out (#fe),a
+        ld      hl,LSR          ;LSR
         ld      a,(hl)
         and     0x01
         jr      z,.exit
@@ -507,19 +514,23 @@ _clfifo:ld      hl,LSR          ;LSR
         ld      a,(hl)
         jr      _clfifo
 .exit:  call    close_isa_ports
+        push af
+        xor a
+        out (#fe),a
+        pop af
         ei
         ret
 ;------------------------------
 rs232_putchar:
-        di
         push    hl
         push    AF
-        push    af        
-        call    open_isa_ports
-        pop     af
         call    zx_putchar_safe
+        di
+        call    open_isa_ports
         pop     de
-        ld      hl,LSR       ;LSR
+        ld a,3
+        out (#fe),a
+        ld      hl,LSR       ;LSR        
 _putch1:
         ld      a,(hl)
         and     0x20
@@ -527,6 +538,8 @@ _putch1:
         ld      hl,DAT          ;DAT
         ld      (hl),d
         call    close_isa_ports
+        xor a
+        out (#fe),a
         pop     hl
         ei
         ret
@@ -541,6 +554,8 @@ rs232_putstr:
 ;------------------------------
 rs232_getchar:
         di
+        ld      a,1
+        out (#fe),a
         call    open_isa_ports
         ld      hl,LSR       ;LSR
         ld      a,(hl)
@@ -550,6 +565,10 @@ rs232_getchar:
         ld      a,(hl)
         inc     b
 .exit:  call    close_isa_ports
+        push af
+        xor a
+        out (#fe),a
+        pop af
         ei
         ret
 check_ports:
@@ -576,7 +595,10 @@ _putc1: push    hl
         ret
 ;------------------------------
 zx_puts_safe:
-        jp      prn_tx
+        push hl
+        call prn_tx
+        pop hl
+        ret
 ;         ld      a,0xff
 ;         ld      (0x5c8c),a
 ; _puts1: ld      a,(hl)
